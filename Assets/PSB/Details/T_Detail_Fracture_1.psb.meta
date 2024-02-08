@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b768b7910efbe604d816a0a8d0fb44cd
+guid: adbff54619758744e9e9cffc0dcada03
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -28,12 +28,12 @@ ScriptedImporter:
     ignoreMasterTextureLimit: 0
     nPOTScale: 1
     sRGBTexture: 1
-    spriteMode: 1
+    spriteMode: 2
     spriteExtrude: 1
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 32
+    spritePixelsToUnits: 100
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -48,7 +48,7 @@ ScriptedImporter:
     flipbookColumns: 0
     ignorePngGamma: 0
     cookieMode: 0
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -69,18 +69,18 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   spriteImportData:
-  - name: PlatformTiles_1
+  - name: 
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 32
-      height: 32
-    spriteID: bfa3f8203550f824c93dfbbd9d99eb17
+      width: 0
+      height: 0
+    spriteID: 
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -93,7 +93,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: AngleRight
+  - name: Detail_2
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -102,9 +102,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 32
-      height: 32
-    spriteID: 974595b5f87e7c54d9483634d67a0c67
+      width: 111
+      height: 118
+    spriteID: f226d18e00ce1e945b294ddf8cff64a1
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -114,51 +114,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 0, y: 0}
-  - name: AngleLeft
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 44
-      width: 32
-      height: 32
-    spriteID: da3233de9411e6e46b5f86c1b31163f0
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 4, y: 44}
-    spritePosition: {x: 0, y: 0}
-  - name: Livello 1
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 84
-      width: 32
-      height: 31
-    spriteID: abf237db6b045b947be2b3a56c7a3f3b
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 4, y: 84}
-    spritePosition: {x: 0, y: 1}
+    spritePosition: {x: 7, y: 8}
   characterData:
     bones: []
     parts: []
@@ -172,40 +128,7 @@ ScriptedImporter:
     dimension: {x: 0, y: 0}
     characterGroups: []
     boneReadOnly: 0
-  platformSettings:
-  - name: DefaultTexturePlatform
-    overridden: 0
-    maxTextureSize: 16384
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Standalone
-    overridden: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Server
-    overridden: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
+  platformSettings: []
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}
@@ -222,41 +145,41 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
-  - name: AngleRight
-    spriteName: AngleRight
+  - name: Detail_2
+    spriteName: Detail_2
     isGroup: 0
     parentIndex: -1
-    spriteID: 974595b5f87e7c54d9483634d67a0c67
-    layerID: 5
+    spriteID: f226d18e00ce1e945b294ddf8cff64a1
+    layerID: 14
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: AngleLeft
-    spriteName: AngleLeft
+  - name: Linea 1
+    spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: da3233de9411e6e46b5f86c1b31163f0
-    layerID: 4
-    mosaicPosition: {x: 4, y: 44}
+    spriteID: 10a0377bb0daa6f49bf3801c8f1e2905
+    layerID: 12
+    mosaicPosition: {x: 0, y: 0}
     flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Livello 1
-    spriteName: Livello 1
+    isImported: 0
+    isVisible: 0
+  - name: Detail_1
+    spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: abf237db6b045b947be2b3a56c7a3f3b
+    spriteID: e217c5beebc213f4fae92b01199c96ba
     layerID: 2
-    mosaicPosition: {x: 4, y: 84}
+    mosaicPosition: {x: 0, y: 0}
     flatten: 0
-    isImported: 1
-    isVisible: 1
+    isImported: 0
+    isVisible: 0
   - name: Sfondo
     spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: 30217a079c1a90d4c92b99f7ebb6c7b2
+    spriteID: 0a031bf250927354ca7bb75651bb071b
     layerID: 1
     mosaicPosition: {x: 0, y: 0}
     flatten: 0

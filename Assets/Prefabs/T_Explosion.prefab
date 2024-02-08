@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 6810178587094712286, guid: ae98f2f2ff8d3494f9880c6316e2817f, type: 3}
+  m_Sprite: {fileID: -1911270920156328676, guid: 04f0f1875a019af4daa593caab6f68db, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,3 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 9219028578748481315, guid: 4f6d7891cc67f2c4eb69cf2dc26fecd8, type: 3}
+  layers:
+    serializedVersion: 2
+    m_Bits: 0
+  tileSprite: {fileID: 0}

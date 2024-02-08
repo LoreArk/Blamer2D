@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b768b7910efbe604d816a0a8d0fb44cd
+guid: 5f12bd8b6e6404b49adc669615be65c7
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   spriteImportData:
-  - name: PlatformTiles_1
+  - name: T_DirtDitail_1_1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -80,7 +80,7 @@ ScriptedImporter:
       y: 0
       width: 32
       height: 32
-    spriteID: bfa3f8203550f824c93dfbbd9d99eb17
+    spriteID: 27b5ea54d4d11ad45a879e612e7326ec
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -93,7 +93,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: AngleRight
+  - name: Dirt
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -103,8 +103,8 @@ ScriptedImporter:
       x: 4
       y: 4
       width: 32
-      height: 32
-    spriteID: 974595b5f87e7c54d9483634d67a0c67
+      height: 29
+    spriteID: 6c5c1b8f78c392841b6bdc7616a75c8a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -114,51 +114,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 0, y: 0}
-  - name: AngleLeft
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 44
-      width: 32
-      height: 32
-    spriteID: da3233de9411e6e46b5f86c1b31163f0
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 4, y: 44}
-    spritePosition: {x: 0, y: 0}
-  - name: Livello 1
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 84
-      width: 32
-      height: 31
-    spriteID: abf237db6b045b947be2b3a56c7a3f3b
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 4, y: 84}
-    spritePosition: {x: 0, y: 1}
+    spritePosition: {x: 0, y: 3}
   characterData:
     bones: []
     parts: []
@@ -175,7 +131,7 @@ ScriptedImporter:
   platformSettings:
   - name: DefaultTexturePlatform
     overridden: 0
-    maxTextureSize: 16384
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -222,33 +178,53 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
-  - name: AngleRight
-    spriteName: AngleRight
+  - name: Falling
+    spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: 974595b5f87e7c54d9483634d67a0c67
+    spriteID: 7fee09cf291e9d14a901b6cb661311d1
+    layerID: 6
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
+  - name: Cables3
+    spriteName: 
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 628a74dd261059f43b4b324900049e77
     layerID: 5
-    mosaicPosition: {x: 4, y: 4}
+    mosaicPosition: {x: 0, y: 0}
     flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: AngleLeft
-    spriteName: AngleLeft
+    isImported: 0
+    isVisible: 0
+  - name: Cables 2
+    spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: da3233de9411e6e46b5f86c1b31163f0
+    spriteID: 5abee766370dfe94883b502408c7d3d4
     layerID: 4
-    mosaicPosition: {x: 4, y: 44}
+    mosaicPosition: {x: 0, y: 0}
     flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Livello 1
-    spriteName: Livello 1
+    isImported: 0
+    isVisible: 0
+  - name: Cables
+    spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: abf237db6b045b947be2b3a56c7a3f3b
+    spriteID: ed87be37fe175174ea8f14e561072060
+    layerID: 3
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
+  - name: Dirt
+    spriteName: Dirt
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 6c5c1b8f78c392841b6bdc7616a75c8a
     layerID: 2
-    mosaicPosition: {x: 4, y: 84}
+    mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -256,7 +232,7 @@ ScriptedImporter:
     spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: 30217a079c1a90d4c92b99f7ebb6c7b2
+    spriteID: ab5ea893edb4bff4f8ceee17805d57a8
     layerID: 1
     mosaicPosition: {x: 0, y: 0}
     flatten: 0
