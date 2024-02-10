@@ -120,8 +120,15 @@ public class PlayerMovement : MonoBehaviour
         grounded = isGrounded();
         onFluid = isOnFluid();
 
-       
-        
+
+        if (bulletPush)
+        {
+            Debug.Log(rb.velocity.y);
+            if (rb.velocity.y < 0)
+            {
+                bulletPush = false;
+            }
+        }
 
     }
 
@@ -137,7 +144,10 @@ public class PlayerMovement : MonoBehaviour
 
         float jumpF = jumpPower;
         if (crouching)
+        {
             jumpF = chargedJumpPower;
+            crouching = false;
+        }
 
         rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(Vector2.up * jumpF, ForceMode2D.Impulse);
@@ -230,9 +240,13 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.drag = linearDrag;
         }
-        else
+        else if(!crouching)
         {
             rb.drag = 0f;
+        }
+        else
+        {
+            rb.drag = 1000;
         }
         
     }
@@ -272,10 +286,10 @@ public class PlayerMovement : MonoBehaviour
         if (!bulletPush)
             return;
 
-        Debug.Log(collision.gameObject);
+       // Debug.Log(collision.gameObject);
 
         
-        bulletPush = false;
+        //bulletPush = false;
     }
 
     private void OnDrawGizmos()

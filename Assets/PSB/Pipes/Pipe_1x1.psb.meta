@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f3147afb4eff95d4e96990df43475006
+guid: 9a56e3aec02aa19468952ed812d2a863
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -28,12 +28,12 @@ ScriptedImporter:
     ignoreMasterTextureLimit: 0
     nPOTScale: 1
     sRGBTexture: 1
-    spriteMode: 2
+    spriteMode: 1
     spriteExtrude: 1
     spriteMeshType: 1
-    alignment: 0
+    alignment: 9
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 100
+    spritePixelsToUnits: 32
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -69,18 +69,18 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   spriteImportData:
-  - name: 
+  - name: Pipe_1x1_1
     originalName: 
-    pivot: {x: 0, y: 0}
-    alignment: 0
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 0
-      height: 0
-    spriteID: 
+      width: 32
+      height: 32
+    spriteID: a49444134c621cd459652234de8e3a0c
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -93,29 +93,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: Livello 1
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 192
-      width: 320
-      height: 135
-    spriteID: b3727f8f1b3d5bb4887c30d677700b55
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: 4, y: 192}
-    spritePosition: {x: 0, y: 45}
-  - name: Sfondo
+  - name: "\u0421\u043B\u043E\u0439 1"
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -124,9 +102,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 320
-      height: 180
-    spriteID: 1c93762b7842242458a78ff88fd2f004
+      width: 128
+      height: 33
+    spriteID: 707cd0318174cc840b1055dc521b9c0d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -136,7 +114,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 1}
   characterData:
     bones: []
     parts: []
@@ -156,7 +134,7 @@ ScriptedImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     forceMaximumCompressionQuality_BC6H_BC7: 0
     crunchedCompression: 0
@@ -200,36 +178,36 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
-  - name: Livello 1
-    spriteName: Livello 1
-    isGroup: 0
-    parentIndex: -1
-    spriteID: b3727f8f1b3d5bb4887c30d677700b55
-    layerID: 5
-    mosaicPosition: {x: 4, y: 192}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Screenshot 2023-12-13 205006
+  - name: Layer 1
     spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: 784301e70a22ab1489b30259ab3bb8e4
-    layerID: 4
+    spriteID: b25a0f24d17ffaa4cb920abddb68c2f5
+    layerID: 3
     mosaicPosition: {x: 0, y: 0}
     flatten: 0
     isImported: 0
     isVisible: 0
-  - name: Sfondo
-    spriteName: Sfondo
+  - name: "\u0421\u043B\u043E\u0439 1"
+    spriteName: "\u0421\u043B\u043E\u0439 1"
     isGroup: 0
     parentIndex: -1
-    spriteID: 1c93762b7842242458a78ff88fd2f004
-    layerID: 1
+    spriteID: 707cd0318174cc840b1055dc521b9c0d
+    layerID: 2
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
+  - name: "\u0424\u043E\u043D"
+    spriteName: 
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 345b5d3def4f1b4479488511734944bd
+    layerID: 1
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
   sharedRigPSDLayers: []
   pSDLayerImportSetting: []
   generateGOHierarchy: 0

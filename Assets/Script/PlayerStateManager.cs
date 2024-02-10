@@ -139,8 +139,8 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
             canShoot = false;
 
             newBullet = Instantiate(bulletPrefab);
-            newBullet.transform.parent = bulletSpawn.parent;
-            newBullet.transform.localPosition = bulletSpawn.localPosition;
+            //newBullet.transform.parent = bulletSpawn.parent;
+            newBullet.transform.position = bulletSpawn.position;
             Bullet b = newBullet.GetComponent<Bullet>();
             b.aimTarget = aimTarget;
             StartCoroutine(WaitForReleaseFire(b));
@@ -180,7 +180,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         }
         else
         {
-            newBullet.transform.localPosition = Vector3.Lerp(newBullet.transform.localPosition, bulletSpawn.localPosition, 200 * Time.deltaTime);
+            newBullet.transform.localPosition = Vector3.Lerp(newBullet.transform.position, bulletSpawn.position, 200 * Time.deltaTime);
 
             newBullet.transform.localScale = Vector3.Lerp(new Vector3(.25f, .25f, .25f), new Vector3(.8f,.8f,.8f), holdingFireTimer / chargedShotTime);
             holdingFireTimer += Time.deltaTime;

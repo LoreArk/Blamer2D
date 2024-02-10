@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: T_Fracture_1_1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -6533492789848623811, guid: 21847ebdb2d2abe4da834e9bdcd363f0, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.21568629, g: 0.227451, b: 0.2509804, a: 1}
   m_Transform:
     e00: 1
     e01: 0

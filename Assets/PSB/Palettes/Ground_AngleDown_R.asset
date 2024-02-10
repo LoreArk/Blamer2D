@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ground_AngleDown_R
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 8253974206240154661, guid: e9f07f54a3c60864783eb8a2ca5d2e0e, type: 3}
-  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  m_Color: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_Transform:
     e00: 1
     e01: 0

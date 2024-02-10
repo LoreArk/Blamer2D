@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: T_Cables_1_1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -420629536171602255, guid: 928f4f481292d94418c5dbf9a55ba625, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
   m_Transform:
     e00: 1
     e01: 0

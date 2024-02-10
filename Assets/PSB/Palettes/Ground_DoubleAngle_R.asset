@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ground_DoubleAngle_R
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -8613625682987834879, guid: 0bdeee530e240a54eb00e25f973e17b1, type: 3}
-  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  m_Color: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_Transform:
     e00: 1
     e01: 0

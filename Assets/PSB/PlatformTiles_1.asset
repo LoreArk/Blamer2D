@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlatformTiles_1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 6079377699165625812, guid: b768b7910efbe604d816a0a8d0fb44cd, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.16078432, g: 0.16078432, b: 0.16078432, a: 1}
   m_Transform:
     e00: 1
     e01: 0

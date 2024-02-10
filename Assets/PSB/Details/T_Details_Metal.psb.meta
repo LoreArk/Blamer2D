@@ -95,8 +95,8 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: Detail_2
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    pivot: {x: 0.50427777, y: 0.09204081}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -117,8 +117,8 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 10}
   - name: Detail_1
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    pivot: {x: 0.50503975, y: -0.06146085}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2

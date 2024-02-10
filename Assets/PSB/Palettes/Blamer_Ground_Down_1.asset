@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blamer_Ground_Down_1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -5176113393099154602, guid: 23e37393010a1e9448c8fd9e98db26aa, type: 3}
-  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  m_Color: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_Transform:
     e00: 1
     e01: 0

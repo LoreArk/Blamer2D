@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Blamer_Ground_Doubleside_1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -2021252295750471107, guid: 12cba2b561c42034dbc0eb9a7368e4ac, type: 3}
-  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  m_Color: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_Transform:
     e00: 1
     e01: 0
