@@ -159,5 +159,5 @@ MonoBehaviour:
   explosionPrefab: {fileID: 9219028578748481315, guid: 4f6d7891cc67f2c4eb69cf2dc26fecd8, type: 3}
   layers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   tileSprite: {fileID: 0}

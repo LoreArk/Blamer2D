@@ -1,17 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour, I_Shootable
 {
     Rigidbody2D rb;
     [SerializeField] public DamageSettings damageSettings;
+    NavMeshAgent agent;
+    PlayerStateManager player;
+    [HideInInspector] public EnemyState enemy;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateUpAxis = false;
+        agent.updateRotation = false;
+        player = PlayerStateManager.Instance;
+        InvokeRepeating("FollowPlayer", .2f, 3);
     }
-    //public LayerMask destructionLayer;
+
+
     private void Update()
     {
         Vector2 moveDirection = rb.velocity;
@@ -32,7 +42,7 @@ public class EnemyBullet : MonoBehaviour
         
         if(collision.gameObject.layer == 3 || collision.gameObject.layer == 6)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
         if (shootable == null)
@@ -41,6 +51,18 @@ public class EnemyBullet : MonoBehaviour
 
         shootable.DoDamage(damageSettings);
 
+        //Destroy(gameObject);
+    }
+
+    public void DoDamage(DamageSettings dmg)
+    {
+        enemy.createdBullets--;
         Destroy(gameObject);
+    }
+
+    void FollowPlayer()
+    {
+        Vector2 destination = new Vector2(player.transform.position.x, player.transform.position.y+1);
+        agent.SetDestination(player.transform.position);
     }
 }

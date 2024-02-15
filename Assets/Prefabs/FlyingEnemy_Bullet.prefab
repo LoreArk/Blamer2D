@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566758086217811821}
   m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.112500004, y: 0.5525437, z: 1}
+  m_LocalPosition: {x: 0, y: 0.1191, z: 0}
+  m_LocalScale: {x: 0.7814187, y: 0.5525437, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9056166726174243441}
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 9056166726174243443}
   - component: {fileID: 9056166726174243444}
   - component: {fileID: 9056166726174243445}
+  - component: {fileID: 2268313359929342548}
   m_Layer: 8
   m_Name: FlyingEnemy_Bullet
   m_TagString: Untagged
@@ -131,9 +132,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.07
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 20
+  m_LinearDrag: 100
+  m_AngularDrag: 100
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -168,3 +169,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e77ea0e4c423144c921daf63b256f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageSettings:
+    damage: 0
+    explosive: 0
+--- !u!195 &2268313359929342548
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9056166726174243446}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 1000
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.7
+  m_BaseOffset: 0.2
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class EnemyState : MonoBehaviour, I_Shootable
 {
@@ -39,18 +40,31 @@ public class EnemyState : MonoBehaviour, I_Shootable
     public float distanceFromPlayer;
 
     Rigidbody2D rb;
+    
+    public Light2D eyeLight;
+    bool shouldFlipToPlayer;
 
     [Header("Shooting")]
+    public float minRandomFire =3;
+    public float maxRandomFire =6;
     public float bulletSpeed;
     bool triggerAttacking;
     bool attackStateTrigger;
     public GameObject explosionPrefab;
+    public int maxBulletSpawn = 5;
+    public int createdBullets;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource eyeAudioSource;
+    [SerializeField] private AudioSource bodyAudioSource;
+    [SerializeField] private AudioSource damageAudioSource;
 
     void Start()
     {
         playerState = FindObjectOfType<PlayerStateManager>();
         patrolIndex = 0;
         rb = GetComponent<Rigidbody2D>();
+        eyeLight = eyes.GetComponentInChildren<Light2D>();
     }
 
     void Update()
@@ -67,11 +81,14 @@ public class EnemyState : MonoBehaviour, I_Shootable
             case AI.unaware:
                 speed = unawareSpeed;
                 waitOnPoint = 1;
+                if(patrolPoints.Count > 0)
                 Patrol();
                 if (PlayerInSight() || attackStateTrigger)
                 {
                     attackStateTrigger = false;
+                    eyeLight.color = Color.red;
                     aiState = AI.attack;
+                    AudioManager.instance.EnemyAlarm(eyeAudioSource);
                 }
                 break;
             case AI.chase:
@@ -99,6 +116,16 @@ public class EnemyState : MonoBehaviour, I_Shootable
         Vector3 forward = eyes.transform.forward;
         Quaternion lookRotation = Quaternion.AngleAxis(angle, forward);
         eyes.rotation = Quaternion.Slerp(eyes.rotation, lookRotation, 10 * Time.deltaTime);
+
+        Debug.DrawRay(transform.position, transform.right, Color.red);
+        float angleToPlayer = Vector2.Angle(transform.right, lookDirection);
+        if (angleToPlayer > 90)
+        {
+            shouldFlipToPlayer = true;
+        }
+        else
+            shouldFlipToPlayer = false;
+
     }
     void Attack()
     {
@@ -106,9 +133,10 @@ public class EnemyState : MonoBehaviour, I_Shootable
         if (!triggerAttacking)
         {
             triggerAttacking = true;
-            InvokeRepeating("ShootAttack", 1, 2);
+            InvokeRepeating("ShootAttack", .25f, Random.Range(minRandomFire, maxRandomFire));
         }
     }
+
     void AttackingMovement()
     {
         availableAttackPoints = GetAttackingSpots();
@@ -201,15 +229,24 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
     void ShootAttack()
     {
-        if (!RaycastPlayer())
+        // if (!RaycastPlayer())
+        //  return;
+
+        //GameObject inst = 
+
+        if (createdBullets >= maxBulletSpawn)
             return;
 
-        GameObject inst = Instantiate(bulletPrefab);
-        inst.transform.position = eyes.transform.position;
-        Rigidbody2D rbb = inst.GetComponent<Rigidbody2D>();
-        Vector3 direction = playerState.transform.position - inst.transform.position;
+        Vector3 spawnPosition = eyes.transform.position;
+        GameObject newBullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity, null);
+        newBullet.GetComponent<EnemyBullet>().enemy = this;
+        createdBullets++;
 
-        rbb.AddForce(direction * bulletSpeed);
+        //inst.transform.position = eyes.transform.position;
+        //Rigidbody2D rbb = inst.GetComponent<Rigidbody2D>();
+        //Vector3 direction = playerState.transform.position - inst.transform.position;
+
+        //rbb.AddForce(direction * bulletSpeed);
     }
     
     bool PlayerInSight()
@@ -298,25 +335,30 @@ public class EnemyState : MonoBehaviour, I_Shootable
     {
         hp -= newDamage.damage;
         attackStateTrigger = true;
+        AudioManager.instance.EnemyDamage(damageAudioSource);
     }
 
     void Flip()
     {
-        if(isFacingRight && rb.velocity.x < 0f || !isFacingRight && rb.velocity.x > 0f)
+        if(isFacingRight && rb.velocity.x < 0f || !isFacingRight && rb.velocity.x > 0f || shouldFlipToPlayer && rb.velocity.x < 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
         }
+        
     }
 
     void Death()
     {
+        eyeAudioSource.loop = false;
+        AudioManager.instance.EnemyDeath(eyeAudioSource);
         CancelInvoke();
         dead = true;
         rb.gravityScale = 12;
         rb.constraints = RigidbodyConstraints2D.None;
+        eyeLight.gameObject.SetActive(false);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -328,6 +370,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
         {
             GameObject inst = Instantiate(explosionPrefab);
             inst.transform.position = transform.position;
+            AudioManager.instance.EnemyImpact(eyeAudioSource);
             Destroy(gameObject, 0.6f);
         }
     }

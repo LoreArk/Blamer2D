@@ -5,10 +5,13 @@ using UnityEngine.Tilemaps;
 
 public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
 {
+
     PlayerStateManager playerState;
-    Rigidbody2D rb;
-    bool activated;
-    public List<I_Shootable> shootables = new List<I_Shootable>();
+    [SerializeField] Sprite activeTileSprite;
+    [HideInInspector]public Rigidbody2D rb;
+    [SerializeField] public bool activated;
+    bool doDamage;
+    [HideInInspector]public List<I_Shootable> shootables = new List<I_Shootable>();
     BoxCollider2D boxCollider;
     public BoxCollider2D ignoreCharCol;
     public LayerMask scenarioLayer;
@@ -22,17 +25,20 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
     public bool isWalkableSurface;
     public float checkIfSurfaceRadius = 0.3f;
     Color isSurfaceColor;
+    [HideInInspector] public FallingTilesGroup group;
+
+    void Awake()
+    {
+        boxCollider = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        isSurfaceColor = Color.yellow;
+    }
 
     void Start()
     {
         playerState = PlayerStateManager.Instance;
-        boxCollider = GetComponent<BoxCollider2D>();
-        rb = GetComponent<Rigidbody2D>();
         playerCollider = playerState.bodyCollider;
-        
         IgnoreCollision(playerCollider, true);
-
-        isSurfaceColor = Color.yellow;
     }
 
     void Update()
@@ -74,13 +80,19 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
     {
         if (!activated)
             return;
+        if (group != null)
+            return;
+
+       // Debug.Log("TILE UPDATE");
+        if (rb.velocity.magnitude > 0.2f)
+            doDamage = true;
+        else
+            doDamage = false;
 
         grounded = IsGrounded();
-        if (grounded)
-        {
-            //activated = false;
-        }
+        
     }
+
 
     public void MakeSolidOtherTiles()
     {
@@ -100,10 +112,13 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
 
         if (hHit.collider.GetComponent<I_JumpableNoCollision>() != null)
         {
+            Debug.Log("Horizontal Hit");
             hHit.collider.GetComponent<I_JumpableNoCollision>().IgnoreCollision(playerCollider, false);
         }
         if(vHit.collider.GetComponent<I_JumpableNoCollision>() != null)
         {
+            Debug.Log("Vertical Hit");
+
             vHit.collider.GetComponent<I_JumpableNoCollision>().IgnoreCollision(playerCollider, false);
         }
     }
@@ -115,7 +130,7 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
 
         if (playerY >= tileTopY)
             return;
-        
+
         //Debug.Log(playerY + " is < " + topSurfaceReference.position.y);
         IgnoreCollision(playerCollider, true);
     }
@@ -125,6 +140,7 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
         float distance = Vector2.Distance(transform.position, origin);
         if (distance > 1.25f)
         {
+            Debug.Log("IGNORE BY DISTANCE");
             isHorizontalSolid = false;
             IgnoreCollision(playerCollider, true);
         }
@@ -132,11 +148,23 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
 
     public void DoDamage(DamageSettings newDamage)
     {
+        if (activated)
+            return;
+
         activated = true;
+        GetComponentInChildren<SpriteRenderer>().sprite = activeTileSprite;
+
+        if (group != null)
+        {
+            group.TileActivated();
+            return;
+        }
 
         rb.constraints = RigidbodyConstraints2D.None;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
     }
+
+
 
     bool IsGrounded()
     {
@@ -149,9 +177,11 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!activated)
+        if (!doDamage)
             return;
         //Debug.Log(collision.gameObject.name);
+
+
         if (collision)
         {
             //Debug.Log(collision.gameObject.name);
@@ -185,13 +215,13 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
         {
             if (isSolid)
                 return;
-            
             IgnoreCollision(playerCollider, false);
         }
         if (horizontal)
         {
             if (isHorizontalSolid)
             return;
+
             MakeSolidHorizontal();
         }
     }
@@ -202,10 +232,22 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
         Physics2D.IgnoreCollision(boxCollider, playerCollider, false);
     }
 
+    public bool IsSolid()
+    {
+        return isSolid || isHorizontalSolid;
+    }
+
     private void OnDrawGizmos()
     {
+
         Gizmos.color = isSurfaceColor;
         Vector2 pos = new Vector2(topSurfaceReference.position.x, topSurfaceReference.position.y + .5f);
         Gizmos.DrawWireSphere(pos, checkIfSurfaceRadius);
+
+        if (isSolid)
+            Gizmos.color = Color.black;
+        else
+            Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x, transform.position.y+.5f), checkIfSurfaceRadius);
     }
 }

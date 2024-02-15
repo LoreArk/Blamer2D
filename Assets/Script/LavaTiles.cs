@@ -16,18 +16,35 @@ public class LavaTiles : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        target = collision.GetComponent<I_Shootable>();
+        
         if (target != collision.GetComponent<I_Shootable>() || collision == null)
             target = null;
 
-        target = collision.GetComponent<I_Shootable>();
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        //Debug.Log(collision.transform.gameObject.name);
+        if(collision.GetComponent<I_Shootable>() != null)
+        {
+            collision.GetComponent<I_Shootable>();
+
+            damageSettings = new DamageSettings();
+            damageSettings.damage = 1;
+            collision.GetComponent<I_Shootable>().DoDamage(damageSettings);
+        }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(target == collision.GetComponent<I_Shootable>())
+        {
+            Debug.Log("target null");
+            target = null;
+        }    
+    }
+
 
     void DoDamage()
     {

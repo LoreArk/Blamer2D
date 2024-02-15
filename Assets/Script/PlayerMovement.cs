@@ -13,9 +13,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float targetTopSpeed = 12f;
     [SerializeField] private float topSpeed = 12f;
     [SerializeField] private float jumpTopSpeed = 16f;
-    [SerializeField] private float linearDrag = 10f;
+    [SerializeField] public float linearDrag = 10f;
+    [SerializeField] private float slopeLinearDrag = 15f;
     [SerializeField] private float fluidDrag = 15f;
     [SerializeField] private float airLinearDrag = 8f;
+    [SerializeField] private float bulletPushLinearDrag = 4f;
     [SerializeField] private float fallMultiplier = 5f;
     [SerializeField] private float lowJumpFallMultiplier = 10f;
     private bool directionChange => (rb.velocity.x > 0f && horizontal < 0f) || (rb.velocity.x < 0f && horizontal > 0f);
@@ -31,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public bool performJump;
     public bool crouchPress;
     public bool crouchRelease;
+    bool onSlope;
     bool onFluid;
     bool crouchStart;
     bool crouchEnd;
@@ -45,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] public Transform checkJumpableGround;
     [SerializeField] public Transform feetPosition;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask jumpableLayer;
     [SerializeField] private LayerMask fluidLayer;
     public float checkSolidRad = .3f;
     public float checkGroundingRad = .4f;
@@ -101,9 +105,13 @@ public class PlayerMovement : MonoBehaviour
     {
         MoveCharacter();
 
+
+
         if (grounded)
         {
             ApplyGroundLinearDrag();
+            if (onSlope && !bulletPush)
+                ApplyGroundSlopeDrag();
         }
         if (onFluid)
         {
@@ -114,27 +122,33 @@ public class PlayerMovement : MonoBehaviour
             ApplyAirLinearDrag();
             FallMultiplier();
         }
+        
 
         CheckSolidTerrainDownwards();
 
-        grounded = isGrounded();
+        grounded = IsGrounded();
         onFluid = isOnFluid();
-
+        onSlope = OnSlope();
 
         if (bulletPush)
         {
-            Debug.Log(rb.velocity.y);
+            ApplyBulletPushLinearDrag();
+            //Debug.Log(rb.velocity.y);
             if (rb.velocity.y < 0)
             {
                 bulletPush = false;
             }
         }
-
+        if (onSlope)
+        {
+            checkGroundingRad = 1;
+        }
+        else checkGroundingRad = .4f;
     }
 
     void ApplyBulletPushLinearDrag()
     {
-        rb.drag = 0;
+        rb.drag = bulletPushLinearDrag;
     }
 
     private void Jump()
@@ -174,10 +188,63 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool isGrounded()
+    bool OnSlope()
     {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up * -1, 2, groundLayer);
         
-        return Physics2D.OverlapCircle(groundCheck.position, checkGroundingRad, groundLayer) /*&& !inFrontOfNoCollisionWalkable*/;
+        if(hit.collider != null)
+        {
+           // Debug.Log("Object: " + hit.collider.gameObject.name + " normal: " + hit.normal);
+
+            if (hit.normal.x != 0)
+                return true;
+        }
+
+        return false;
+        
+    }
+
+    private bool IsGrounded()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, checkGroundingRad, groundLayer);
+
+
+        if (colliders.Length <= 0)
+            return false;
+
+        bool onGround = false;
+        I_JumpableNoCollision jumpable = null;
+        foreach (Collider2D collider in colliders)
+        {
+            jumpable = collider.GetComponent<I_JumpableNoCollision>();
+
+            if(jumpable != null)
+            {
+                if (jumpable.IsSolid())
+                {
+                    return true;
+                }
+            }
+            
+
+            if (jumpable == null && onGround == false)
+                onGround = true;
+        }
+
+
+        if (jumpable != null && onGround == true)
+        {
+            //Debug.Log("JUMPABLE AND GROUND");
+            return true;
+        }
+        if (jumpable != null && onGround == false)
+        {
+            //Debug.Log(" NO GROUND");
+            return false;
+        }
+        else
+            return true;
+        //return Physics2D.OverlapCircle(groundCheck.position, checkGroundingRad, groundLayer) && !inFrontOfNoCollisionWalkable;
     }
 
     private bool isOnFluid()
@@ -188,31 +255,38 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckSolidTerrainDownwards()
     {
-        Collider2D collider = Physics2D.OverlapCircle(checkJumpableGround.position, checkSolidRad, groundLayer);
-       // Debug.Log(collider != null);
-
-        if (!collider)
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(checkJumpableGround.position, checkSolidRad, jumpableLayer);
+        // Debug.Log(collider != null);
+        if (colliders.Length <= 0)
             return;
-        if (collider.gameObject.GetComponent<I_JumpableNoCollision>() == null)
+
+        foreach (Collider2D collider in colliders)
         {
-            inFrontOfNoCollisionWalkable = false;
-            onNoCollisionTiles = false;
-            return;
+
+            if (collider.gameObject.GetComponent<I_JumpableNoCollision>() == null)
+            {
+                inFrontOfNoCollisionWalkable = false;
+                onNoCollisionTiles = false;
+                return;
+            }
+
+            //Debug.Log(collider.gameObject.name);
+            GameObject g = collider.gameObject;
+            I_JumpableNoCollision tile = collider.gameObject.GetComponent<I_JumpableNoCollision>();
+
+            float tileY = g.transform.position.y;
+            float playerY = groundCheck.position.y;
+            float dif = playerY - tileY;
+            //Debug.Log(dif);
+            onNoCollisionTiles = tile != null && dif > .5f && tile.IsWalkableSurface();
+            inFrontOfNoCollisionWalkable = tile != null && !onNoCollisionTiles;
+            if (!onNoCollisionTiles)
+              return;
+            tile.MakeSolidByAxis(true, false);
+            CheckSolidTerrainHorizontal();
         }
-
-        GameObject g = collider.gameObject;
-        I_JumpableNoCollision tile = collider.gameObject.GetComponent<I_JumpableNoCollision>();
         
-        float tileY = g.transform.position.y;
-        float playerY = groundCheck.position.y;
-        float dif = playerY - tileY;
-        onNoCollisionTiles = tile != null &&  dif > .9f && tile.IsWalkableSurface();
-        inFrontOfNoCollisionWalkable = tile != null && !onNoCollisionTiles;
-        if (!onNoCollisionTiles)
-            return;
-
-        tile.MakeSolidByAxis(true, false);
-        CheckSolidTerrainHorizontal();
+        
     }
 
     void CheckSolidTerrainHorizontal()
@@ -232,7 +306,20 @@ public class PlayerMovement : MonoBehaviour
             hit.collider.gameObject.GetComponent<I_JumpableNoCollision>().MakeSolidByAxis(false, true);
         }
     }
+    void ApplyGroundSlopeDrag()
+    {
+        rb.gravityScale = 5;
 
+        if (Mathf.Abs(horizontal) == 0 || directionChange)
+        {
+
+            rb.drag = 2500;
+        }
+        else
+        {
+            rb.drag = slopeLinearDrag;
+        }
+    }
     private void ApplyGroundLinearDrag()
     {
         rb.gravityScale = 1;

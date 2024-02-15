@@ -5,11 +5,13 @@ using UnityEngine.Events;
 
 public class DamageSystemComponent : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int health;
+    [SerializeField] public int maxHealth;
+    [SerializeField] public int health;
     private bool isDead;
     private bool isInvincible;
     [SerializeField] public UnityEvent onDeath;
+    [SerializeField] public UnityEvent onDamage;
+    [SerializeField] public UnityEvent onHeal;
     [SerializeField] private float invincibilityTime;
 
     void Start()
@@ -29,6 +31,7 @@ public class DamageSystemComponent : MonoBehaviour
             return;
 
         health -= dmg.damage;
+        onDamage.Invoke();
 
         if(health <= 0)
         {
@@ -53,4 +56,13 @@ public class DamageSystemComponent : MonoBehaviour
         isInvincible = false;
     }
 
+    public void Heal(int amount)
+    {
+        health += amount;
+        if (health > maxHealth)
+            health = maxHealth;
+
+        onHeal.Invoke();
+
+    }
 }

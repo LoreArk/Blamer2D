@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
     public InputAction jump;
     public InputAction rightClick;
     public InputAction leftClick;
+    public InputAction interact;
 
     private void OnEnable()
     {
@@ -18,6 +19,7 @@ public class InputManager : MonoBehaviour
         rightClick.Enable();
         leftClick.Enable();
         down.Enable();
+        interact.Enable();
     }
 
     private void OnDisable()
@@ -27,6 +29,7 @@ public class InputManager : MonoBehaviour
         rightClick.Disable();
         leftClick.Disable();
         down.Disable();
+        interact.Disable();
     }
 
     void Start()
