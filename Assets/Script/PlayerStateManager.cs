@@ -35,7 +35,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     bool canShoot;
     GameObject newBullet;
     Quaternion lookRotation;
-    Vector3 lookDirection;
+    Vector2 lookDirection;
     float holdingFireTimer = 0;
     [SerializeField] private float chargedShotTime = 2f;
     bool chargedShot;
@@ -131,11 +131,31 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     void ArmRotation()
     {
 
+        lookDirection = input.aim.ReadValue<Vector2>();
+
+        Debug.Log(lookDirection);
         if (aim)
         {
-            lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - arm.position;
-            if (!isFacingRight)
-                lookDirection = arm.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - arm.position;
+            //Debug.Log(input.inputAsset.currentControlScheme);
+
+            if (input.inputAsset.currentControlScheme != "Gamepad")
+            {
+                lookDirection = lookDirection - new Vector2(Screen.width / 2, Screen.height / 2);
+                if (!isFacingRight)
+                    lookDirection = new Vector2(lookDirection.x * -1, lookDirection.y * -1);
+                //lookDirection = new Vector2(Screen.width / 2, Screen.height / 2) - lookDirection;
+                Debug.Log("Mouse");
+            }
+            else
+            {
+                if (!isFacingRight)
+                    lookDirection = new Vector2(lookDirection.x * -1, lookDirection.y * -1);
+                Debug.Log("Gamepad");
+            }
+
+            Debug.DrawRay(transform.position, lookDirection, Color.red);
+
             float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
             angle = Mathf.Clamp(angle, -90, 90);
             Vector3 forward = arm.transform.forward;

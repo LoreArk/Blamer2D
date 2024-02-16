@@ -5,12 +5,19 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    public PlayerInput inputAsset;
     public InputAction horizontalMovement;
+    public InputAction aim;
     public InputAction down;
     public InputAction jump;
     public InputAction rightClick;
     public InputAction leftClick;
     public InputAction interact;
+
+    private void Awake()
+    {
+        aim = inputAsset.actions.FindAction("Look");
+    }
 
     private void OnEnable()
     {
@@ -20,6 +27,7 @@ public class InputManager : MonoBehaviour
         leftClick.Enable();
         down.Enable();
         interact.Enable();
+        aim.Enable();
     }
 
     private void OnDisable()
@@ -30,15 +38,16 @@ public class InputManager : MonoBehaviour
         leftClick.Disable();
         down.Disable();
         interact.Disable();
+        aim.Disable();
     }
 
     void Start()
     {
-        
+       
     }
 
     void Update()
     {
-        
+
     }
 }

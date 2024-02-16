@@ -340,7 +340,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
     void Flip()
     {
-        if(isFacingRight && rb.velocity.x < 0f || !isFacingRight && rb.velocity.x > 0f || shouldFlipToPlayer && rb.velocity.x < 0f)
+        if(isFacingRight && rb.velocity.x < 0f || !isFacingRight && rb.velocity.x > 0f || shouldFlipToPlayer && rb.velocity.magnitude <= 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
