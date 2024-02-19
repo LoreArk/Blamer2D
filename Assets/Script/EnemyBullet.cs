@@ -7,10 +7,13 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
 {
     Rigidbody2D rb;
     [SerializeField] public DamageSettings damageSettings;
+    [SerializeField] private GameObject bloodParticle;
     NavMeshAgent agent;
     PlayerStateManager player;
     [HideInInspector] public EnemyState enemy;
     public GameObject sprite;
+    bool isFacingRight = true;
+    bool isFacingDown = true;
 
     private void Start()
     {
@@ -18,34 +21,12 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
         agent = GetComponent<NavMeshAgent>();
         agent.updateUpAxis = false;
         agent.updateRotation = false;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         player = PlayerStateManager.Instance;
         
         InvokeRepeating("FollowPlayer", .2f, 3);
     }
 
-    void Flip()
-    {
-        float yMultiplier = 1;
-        float xMultiplier = 1;
-
-        if (rb.velocity.y >= 0.1)
-        {
-            yMultiplier = -1;
-        }
-        else
-            yMultiplier = 1;
-
-        if (rb.velocity.x >= 0.1)
-        {
-            xMultiplier = 1;
-        }
-        else
-            xMultiplier = -1;
-
-
-        sprite.transform.localScale = new Vector3(sprite.transform.localScale.x * xMultiplier, sprite.transform.localScale.y * yMultiplier, sprite.transform.localScale.x);
-
-    }
 
     private void Update()
     {
@@ -56,7 +37,33 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
-        //Flip();
+
+
+        HandleFlip();
+    }
+
+    void HandleFlip()
+    {
+        //Debug.Log(agent.velocity.x);
+
+        if (agent.velocity.y > 2 && isFacingDown || agent.velocity.y < -2 && !isFacingDown)
+        {
+            Debug.Log("LOOK UP");
+
+            isFacingDown = !isFacingDown;
+            Vector3 localScale = transform.localScale;
+            localScale.y *= -1f;
+            transform.localScale = localScale;
+        }
+
+        if (agent.velocity.x > 2 && !isFacingRight || agent.velocity.x < -2 && isFacingRight)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -84,7 +91,11 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
     public void DoDamage(DamageSettings dmg)
     {
         enemy.createdBullets--;
-        Destroy(gameObject);
+        Physics2D.IgnoreCollision(GetComponent<CircleCollider2D>(), player.bodyCollider);
+        GameObject instance = Instantiate(bloodParticle, transform.position, Quaternion.Euler(0, 0, 0));
+        instance.transform.localScale = new Vector3(.6f, .6f, .6f);
+
+        Destroy(gameObject, 0.1f);
     }
 
     void FollowPlayer()

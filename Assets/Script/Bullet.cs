@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
     bool isCharged;
     List<I_Shootable> shotObjects = new List<I_Shootable>();
     AudioSource audioSource;
+    [SerializeField] private GameObject hitParticlePrefab;
 
     private void Awake()
     {
@@ -91,6 +92,11 @@ public class Bullet : MonoBehaviour
 
         if(collision != null)
         {
+            if(!isCharged)
+            Instantiate(hitParticlePrefab, collision.GetContact(0).point, Quaternion.Euler(0, 0, 0));
+
+            
+
             I_Shootable shootable = collision.transform.GetComponent<I_Shootable>();
             if (shootable != null && !shotObjects.Contains(shootable))
             {

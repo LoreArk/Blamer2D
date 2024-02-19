@@ -177,7 +177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiles: []
-  audioSource: {fileID: 6120009375674586968}
+  particleSpawnPoints: []
+  particlePrefab: {fileID: 7819472158531343006, guid: 3fce67f7d1045b749956cb4b9e0202b7, type: 3}
 --- !u!61 &3278928312362399556
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
     PlayerStateManager playerState;
     public AI aiState;
     public Transform eyes;
+    public Transform spawnTransform;
     public LayerMask lookLayer;
     public GameObject bulletPrefab;
 
@@ -119,6 +120,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
         Debug.DrawRay(transform.position, transform.right, Color.red);
         float angleToPlayer = Vector2.Angle(transform.right, lookDirection);
+        Debug.Log(angleToPlayer);
         if (angleToPlayer > 90)
         {
             shouldFlipToPlayer = true;
@@ -169,7 +171,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
             StartCoroutine(WaitAtAttackPoint());
         }
 
-        Flip();
+        AttackFlip();
 
         //transform.position = Vector2.MoveTowards(transform.position, targetAttackSpot, speed * Time.deltaTime);
     }
@@ -229,24 +231,13 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
     void ShootAttack()
     {
-        // if (!RaycastPlayer())
-        //  return;
-
-        //GameObject inst = 
-
         if (createdBullets >= maxBulletSpawn)
             return;
 
-        Vector3 spawnPosition = eyes.transform.position;
+        Vector3 spawnPosition = spawnTransform.transform.position;
         GameObject newBullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity, null);
         newBullet.GetComponent<EnemyBullet>().enemy = this;
         createdBullets++;
-
-        //inst.transform.position = eyes.transform.position;
-        //Rigidbody2D rbb = inst.GetComponent<Rigidbody2D>();
-        //Vector3 direction = playerState.transform.position - inst.transform.position;
-
-        //rbb.AddForce(direction * bulletSpeed);
     }
     
     bool PlayerInSight()
@@ -340,7 +331,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
     void Flip()
     {
-        if(isFacingRight && rb.velocity.x < 0f || !isFacingRight && rb.velocity.x > 0f || shouldFlipToPlayer && rb.velocity.magnitude <= 0f)
+        if(isFacingRight && rb.velocity.x < 0f || !isFacingRight && rb.velocity.x > 0f)
         {
             isFacingRight = !isFacingRight;
             Vector3 localScale = transform.localScale;
@@ -348,6 +339,17 @@ public class EnemyState : MonoBehaviour, I_Shootable
             transform.localScale = localScale;
         }
         
+    }
+
+    void AttackFlip()
+    {
+        if(shouldFlipToPlayer)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
     }
 
     void Death()

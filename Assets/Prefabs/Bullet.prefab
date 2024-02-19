@@ -248,6 +248,7 @@ MonoBehaviour:
   shootableLayers:
     serializedVersion: 2
     m_Bits: 65295
+  hitParticlePrefab: {fileID: 6386164770126751040, guid: 53e2766ff8444b444a082c4164ebfc0d, type: 3}
 --- !u!58 &7294887722451433196
 CircleCollider2D:
   m_ObjectHideFlags: 0

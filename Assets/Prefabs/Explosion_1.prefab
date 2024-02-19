@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9219028578748481313}
   - component: {fileID: 9219028578748481314}
   - component: {fileID: 7452270784015753323}
+  - component: {fileID: -445962785449617298}
   m_Layer: 0
   m_Name: Explosion_1
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 25
-  m_Sprite: {fileID: -3526150454321769786, guid: 9e1737ccc375a97439ba1c3ed5bc20c8, type: 3}
+  m_Sprite: {fileID: 804263772, guid: c88da178eae01d3468ddb7076b8a62e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 9219028578748481315}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 33032cf1f2c527548810c473d0cd19f1, type: 2}
+  m_Controller: {fileID: 9100000, guid: eaaa1dbfb3c69fa409434a7be219600e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -202,3 +203,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-445962785449617298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9219028578748481315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8f732f1a3cc574e92665edac973426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 2

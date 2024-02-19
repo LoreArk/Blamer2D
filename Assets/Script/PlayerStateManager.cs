@@ -37,6 +37,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     Quaternion lookRotation;
     Vector2 lookDirection;
     float holdingFireTimer = 0;
+    [SerializeField] private float ratio = .3f;
     [SerializeField] private float chargedShotTime = 2f;
     bool chargedShot;
     [SerializeField] public Transform laserStart;
@@ -54,6 +55,8 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     [Header("Sprites")]
     [SerializeField] GameObject deafultSprite;
     [SerializeField] GameObject chargedShotSprite;
+    [SerializeField] GameObject jumpSprite;
+    [SerializeField] GameObject landSprite;
     bool defaultSpriteActive;
     PlayerSprite chargedPlayerSprite;
 
@@ -133,7 +136,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
         lookDirection = input.aim.ReadValue<Vector2>();
 
-        Debug.Log(lookDirection);
+        //Debug.Log(lookDirection);
         if (aim)
         {
             //lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - arm.position;
@@ -227,6 +230,13 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         holdingFireTimer = 0;
         newBullet.transform.parent = null;
         bullet.LaunchBullet();
+        StartCoroutine(RatioTimer());
+    }
+
+    IEnumerator RatioTimer()
+    {
+        yield return new WaitForSeconds(ratio);
+
         canShoot = true;
     }
 
@@ -381,5 +391,20 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     public void ToggleAttackCollider(bool enabled)
     {
         meleeCollider.SetActive(enabled);
+    }
+
+    public void SpawnJumpSprite()
+    {
+        
+        GameObject instance = Instantiate(jumpSprite, movement.groundCheck.position, Quaternion.Euler(0,0,0), null);
+        instance.transform.localScale = new Vector3(.5f, .5f, .5f);
+
+    }
+
+    public void SpawnLandSprite()
+    {
+        GameObject instance = Instantiate(landSprite, movement.groundCheck.position, Quaternion.Euler(0, 0, 0), null);
+        instance.transform.localScale = new Vector3(.5f, .5f, .5f);
+
     }
 }
