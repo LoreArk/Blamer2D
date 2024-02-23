@@ -1695,8 +1695,22 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0.05
+    functionName: PlayerLandedStart
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.06666667
     functionName: PlayerLanded
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.3
+    functionName: PlayerLandedEnd
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

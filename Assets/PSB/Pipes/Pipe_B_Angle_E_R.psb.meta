@@ -29,7 +29,7 @@ ScriptedImporter:
     nPOTScale: 1
     sRGBTexture: 1
     spriteMode: 1
-    spriteExtrude: 1
+    spriteExtrude: 0
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
@@ -82,9 +82,19 @@ ScriptedImporter:
       height: 32
     spriteID: 8a3ed4d37215d7b49a9f5b6bed94665a
     spriteBone: []
-    spriteOutline: []
+    spriteOutline:
+    - outline:
+      - {x: -16, y: -16}
+      - {x: -16, y: 16}
+      - {x: 16, y: 16}
+      - {x: 16, y: -16}
     vertices: []
-    spritePhysicsOutline: []
+    spritePhysicsOutline:
+    - outline:
+      - {x: -16, y: -16}
+      - {x: -16, y: 16}
+      - {x: 16, y: 16}
+      - {x: 16, y: -16}
     indices: 
     edges: []
     tessellationDetail: 0

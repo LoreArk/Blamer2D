@@ -48,4 +48,27 @@ public class AnimatorHook : MonoBehaviour
     {
         audioManager.PlayerMeleeSlash(PlayerStateManager.Instance.gunAudioSource);
     }
+
+    public void PlayerLandedStart()
+    {
+        PlayerStateManager.Instance.movement.landedPhase = true;
+    }
+
+    public void PlayerLandedEnd()
+    {
+        PlayerStateManager.Instance.movement.landedPhase = false;
+    }
+
+    public void PlayerMeleeStart()
+    {
+        PlayerStateManager.Instance.meleeAttack = true;
+
+    }
+
+    public void PlayerMeleeEnd()
+    {
+        PlayerStateManager.Instance.meleeAttack = false;
+
+    }
+
 }

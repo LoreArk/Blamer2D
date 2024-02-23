@@ -34,7 +34,7 @@ public class ExplosiveTile : MonoBehaviour, I_Shootable
     IEnumerator DealDamage(Vector3 pos)
     {
         yield return new WaitForSeconds(0.2f);
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 0.75f, layers);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 1f, layers);
         //Debug.Log(colliders.Length);
 
         foreach (Collider2D c in colliders)

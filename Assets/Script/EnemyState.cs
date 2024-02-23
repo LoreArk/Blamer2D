@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.AI;
 
 public class EnemyState : MonoBehaviour, I_Shootable
 {
@@ -11,7 +12,6 @@ public class EnemyState : MonoBehaviour, I_Shootable
     public Transform spawnTransform;
     public LayerMask lookLayer;
     public GameObject bulletPrefab;
-
 
     [Header("Stats")]
     public int hp = 50;
@@ -66,6 +66,9 @@ public class EnemyState : MonoBehaviour, I_Shootable
         patrolIndex = 0;
         rb = GetComponent<Rigidbody2D>();
         eyeLight = eyes.GetComponentInChildren<Light2D>();
+        eyeAudioSource.volume = eyeAudioSource.volume * AudioManager.instance.masterVolume;
+        bodyAudioSource.volume = bodyAudioSource.volume * AudioManager.instance.masterVolume;
+        damageAudioSource.volume = bodyAudioSource.volume * AudioManager.instance.masterVolume;
     }
 
     void Update()
@@ -120,7 +123,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
         Debug.DrawRay(transform.position, transform.right, Color.red);
         float angleToPlayer = Vector2.Angle(transform.right, lookDirection);
-        Debug.Log(angleToPlayer);
+        //Debug.Log(angleToPlayer);
         if (angleToPlayer > 90)
         {
             shouldFlipToPlayer = true;
@@ -151,20 +154,27 @@ public class EnemyState : MonoBehaviour, I_Shootable
             return;
 
         //Debug.Log("GO TO ATTACK SPOT: " + availableAttackPoints.Count + " " + availableAttackSpotIndex);
-
+        /*
         if (availableAttackPoints.Count <= 0 || availableAttackSpotIndex >= availableAttackPoints.Count - 1)
         {
             availableAttackSpotIndex = 0;
         }
 
         int i = availableAttackSpotIndex;
-        Vector2 targetPos = availableAttackPoints[i];
+        Vector2 targetPos = availableAttackPoints[i]; */
+        if (availableAttackSpotIndex >= attackPoints.Count)
+        {
+            return;
+        }
+
+        int i = availableAttackSpotIndex;
+        Vector2 targetPos = attackPoints[i].position;
         Vector2 pos = new Vector2(transform.position.x, transform.position.y);
         Vector2 direction = targetPos - pos;
         //transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
         rb.AddForce(direction * speed);
-
         float distance = Vector2.Distance(transform.position, availableAttackPoints[i]);
+
 
         if (distance < movementPrecision)
         {
@@ -178,11 +188,10 @@ public class EnemyState : MonoBehaviour, I_Shootable
     IEnumerator WaitAtAttackPoint()
     {
         waiting = true;
-        yield return new WaitForSeconds(waitOnPoint);
-       // Debug.Log("CHANGE ATTACK SPOT: " + availableAttackPoints.Count + " " + availableAttackSpotIndex);
+        yield return new WaitForSeconds(.2f);
+        Debug.Log("CHANGE ATTACK SPOT: " + availableAttackPoints.Count + " " + availableAttackSpotIndex);
         
         availableAttackSpotIndex++;
-
         waiting = false;
     }
 
@@ -288,12 +297,13 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
         int i = patrolIndex;
         Vector2 targetPos = patrolPoints[i].position;
-        Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+         Vector2 pos = new Vector2(transform.position.x, transform.position.y);
         Vector2 direction = targetPos - pos;
-        //transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+        
         rb.AddForce(direction * speed);
-
-        float distance = Vector2.Distance(transform.position, patrolPoints[i].position);
+        
+        //agent.SetDestination(patrolPoints[patrolIndex].position);
+        float distance = Vector2.Distance(transform.position, patrolPoints[patrolIndex].position);
 
         if(distance < movementPrecision)
         {
@@ -307,7 +317,6 @@ public class EnemyState : MonoBehaviour, I_Shootable
     {
         waiting = true;
         yield return new WaitForSeconds(waitOnPoint);
-        //Debug.Log("CHANGE PATROL POINT");
         if (patrolIndex < patrolPoints.Count - 1)
             patrolIndex++;
         else

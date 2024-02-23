@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     public InputAction rightClick;
     public InputAction leftClick;
     public InputAction interact;
+    public InputAction run;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class InputManager : MonoBehaviour
         down.Enable();
         interact.Enable();
         aim.Enable();
+        run.Enable();
     }
 
     private void OnDisable()
@@ -39,6 +41,7 @@ public class InputManager : MonoBehaviour
         down.Disable();
         interact.Disable();
         aim.Disable();
+        run.Disable();
     }
 
     void Start()

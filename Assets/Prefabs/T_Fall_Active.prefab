@@ -124,7 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeTileSprite: {fileID: 0}
   rb: {fileID: 0}
-  activated: 0
+  activated: 1
   ignoreCharCol: {fileID: 0}
   scenarioLayer:
     serializedVersion: 2

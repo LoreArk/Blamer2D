@@ -8,6 +8,8 @@ public class DestructibleTile : MonoBehaviour, I_Shootable
     bool invincible;
     [SerializeField] private ParticleSystem damagedParticle;
     [SerializeField] private ParticleSystem destroyedParticle;
+    [SerializeField] private BoxCollider2D spriteCollider;
+
 
     void Start()
     {
@@ -20,7 +22,7 @@ public class DestructibleTile : MonoBehaviour, I_Shootable
         if (!invincible)
         {
             health -= dmg.damage;
-            Debug.Log("Destructible damage: " + dmg.damage);
+            //Debug.Log("Destructible damage: " + dmg.damage);
             invincible = true;
             damagedParticle.Play();
             StartCoroutine(Invincibility());
@@ -28,12 +30,13 @@ public class DestructibleTile : MonoBehaviour, I_Shootable
 
         if (health <= 0)
         {
+            //Debug.Log("Dead");
             SpriteRenderer sprite = GetComponentInChildren<SpriteRenderer>();
             sprite.enabled = false;
             destroyedParticle.Play();
             GetComponent<BoxCollider2D>().enabled = false;
-            GetComponentInChildren<BoxCollider2D>().enabled = false;
-            Destroy(gameObject, 1);
+            Destroy(spriteCollider.gameObject);
+            Destroy(gameObject, 2);
         }
     }
 

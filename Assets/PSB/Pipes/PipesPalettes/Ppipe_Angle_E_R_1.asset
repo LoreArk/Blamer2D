@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ppipe_Angle_E_R_1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 2725450374128324753, guid: 943b35cfc76258842928bc0d12fa0765, type: 3}
-  m_Color: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
+  m_Color: {r: 0.122641504, g: 0.118592024, b: 0.118592024, a: 1}
   m_Transform:
     e00: 1
     e01: 0

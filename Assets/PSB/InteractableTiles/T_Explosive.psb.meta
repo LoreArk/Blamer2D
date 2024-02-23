@@ -28,7 +28,7 @@ ScriptedImporter:
     ignoreMasterTextureLimit: 0
     nPOTScale: 1
     sRGBTexture: 1
-    spriteMode: 2
+    spriteMode: 1
     spriteExtrude: 1
     spriteMeshType: 1
     alignment: 0
@@ -69,18 +69,18 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   spriteImportData:
-  - name: 
+  - name: T_Explosive_1
     originalName: 
-    pivot: {x: 0, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 0
       y: 0
-      width: 0
-      height: 0
-    spriteID: 
+      width: 32
+      height: 32
+    spriteID: 2c7faedc6af697e4e951bad3ca4d82d5
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -93,7 +93,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: Cables3
+  - name: Rettangolo 1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -102,9 +102,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 32
-      height: 32
-    spriteID: 720d618bd54646347955b682cce76eec
+      width: 5
+      height: 5
+    spriteID: f548bea9c24cc144685ab24751fd6378
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -188,16 +188,26 @@ ScriptedImporter:
     flatten: 0
     isImported: 0
     isVisible: 0
+  - name: Rettangolo 1
+    spriteName: Rettangolo 1
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f548bea9c24cc144685ab24751fd6378
+    layerID: 11
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: Cables3
     spriteName: Cables3
     isGroup: 0
     parentIndex: -1
     spriteID: 720d618bd54646347955b682cce76eec
     layerID: 5
-    mosaicPosition: {x: 4, y: 4}
+    mosaicPosition: {x: 26, y: 57}
     flatten: 0
-    isImported: 1
-    isVisible: 1
+    isImported: 0
+    isVisible: 0
   - name: Cables 2
     spriteName: 
     isGroup: 0

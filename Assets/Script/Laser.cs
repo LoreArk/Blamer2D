@@ -17,7 +17,7 @@ public class Laser : MonoBehaviour
 
     private void Update()
     {
-        if (player.aim)
+        if (player.aimInput)
         {
             lineRenderer.enabled = true;
         }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4184234595068184880}
   - component: {fileID: 3328600843591147191}
   - component: {fileID: 5794198987160652659}
+  - component: {fileID: -7932064282035328350}
   m_Layer: 0
   m_Name: Spark
   m_TagString: Untagged
@@ -105,3 +106,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &-7932064282035328350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6386164770126751040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8f732f1a3cc574e92665edac973426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 2

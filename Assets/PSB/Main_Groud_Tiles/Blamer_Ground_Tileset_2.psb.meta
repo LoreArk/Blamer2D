@@ -159,6 +159,28 @@ ScriptedImporter:
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 84}
     spritePosition: {x: 0, y: 0}
+  - name: Ground_Down
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 4
+      width: 32
+      height: 32
+    spriteID: de40103c663d9ad468088ca3d8be60e8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 44, y: 4}
+    spritePosition: {x: 0, y: 0}
   characterData:
     bones: []
     parts: []
@@ -293,15 +315,15 @@ ScriptedImporter:
     isImported: 1
     isVisible: 1
   - name: Ground_Down
-    spriteName: 
+    spriteName: Ground_Down
     isGroup: 0
     parentIndex: -1
     spriteID: de40103c663d9ad468088ca3d8be60e8
     layerID: 8
-    mosaicPosition: {x: 0, y: 0}
+    mosaicPosition: {x: 44, y: 4}
     flatten: 0
-    isImported: 0
-    isVisible: 0
+    isImported: 1
+    isVisible: 1
   - name: Ground_Fill
     spriteName: 
     isGroup: 0

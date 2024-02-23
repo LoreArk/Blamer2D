@@ -20,7 +20,7 @@ public class ChargedShotSprite : MonoBehaviour
     private void OnEnable()
     {
         GetComponentInParent<PlayerStateManager>().arm = arm;
-        GetComponentInParent<PlayerStateManager>().bulletSpawn = bulletSpawn;
+        GetComponentInParent<PlayerStateManager>().aimBulletSpawn = bulletSpawn;
         GetComponentInParent<PlayerStateManager>().aimTarget = target;
     }
 }

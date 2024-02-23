@@ -13,9 +13,14 @@ public class Bullet : MonoBehaviour
     DamageSettings damageSettings;
     [SerializeField] private LayerMask shootableLayers;
     bool isCharged;
+    int charge;
     List<I_Shootable> shotObjects = new List<I_Shootable>();
     AudioSource audioSource;
     [SerializeField] private GameObject hitParticlePrefab;
+    [SerializeField] private GameObject hitParticlePrefab2;
+    [SerializeField] private GameObject hitParticlePrefab3;
+   // [SerializeField] private Animator animator;
+   // [SerializeField] private GameObject bulletSprite;
 
     private void Awake()
     {
@@ -32,13 +37,19 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         
-        
         trail.startWidth = gameObject.transform.localScale.x;
+
+        //SpriteRotation();
 
         if (!launched)
             return;
 
-        RaycastShootable();
+       RaycastShootable();
+    }
+
+    public void SpriteRotation()
+    {
+        
     }
 
     public void LaunchBullet()
@@ -47,9 +58,21 @@ public class Bullet : MonoBehaviour
         launched = true;
         direction = aimTarget.position - transform.position;
         GetComponent<SpriteRenderer>().renderingLayerMask = 0;
-        //rb.gravityScale = 1;
         rb.AddForce(direction * force);
-        //InvokeRepeating("GetMagnitude", 0.5f, 0.2f);
+        /*GetComponent<SpriteRenderer>().enabled = false;
+
+        if(charge == 0)
+        {
+            animator.Play("Bullet_0");
+        }
+        else if(charge == 1)
+        {
+            animator.Play("Bullet_1");
+        }
+        else if (isCharged)
+        {
+            animator.Play("Bullet_2");
+        }*/
 
         Destroy(gameObject, 10);
     }
@@ -70,8 +93,10 @@ public class Bullet : MonoBehaviour
     {
         damageSettings = new DamageSettings();
         float damage = 10;
+        charge = 0;
         if (chargeLevel > 0.5)
         {
+            charge = 1;
             damage = 20;
         }
         if(chargeLevel == 1)
@@ -92,8 +117,13 @@ public class Bullet : MonoBehaviour
 
         if(collision != null)
         {
-            if(!isCharged)
-            Instantiate(hitParticlePrefab, collision.GetContact(0).point, Quaternion.Euler(0, 0, 0));
+            GameObject hitToSpawn = hitParticlePrefab;
+            if (charge == 1)
+                hitToSpawn = hitParticlePrefab2;
+            if (isCharged)
+                hitToSpawn = hitParticlePrefab3;
+
+            Instantiate(hitToSpawn, collision.GetContact(0).point, Quaternion.Euler(0, 0, 0));
 
             
 
@@ -150,7 +180,7 @@ public class Bullet : MonoBehaviour
     private void OnDrawGizmos()
     {
 
-        Gizmos.DrawSphere(transform.position, transform.localScale.x * 0.9f);
+        //Gizmos.DrawSphere(transform.position, transform.localScale.x * 0.9f);
     }
 
     

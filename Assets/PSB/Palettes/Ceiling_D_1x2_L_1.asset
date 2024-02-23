@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ceiling_D_1x2_L_1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -93966650187642490, guid: 84d5d828ad3f88b40a33079f06bc1b92, type: 3}
-  m_Color: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
+  m_Color: {r: 0.08235294, g: 0.078431375, b: 0.078431375, a: 1}
   m_Transform:
     e00: 1
     e01: 0

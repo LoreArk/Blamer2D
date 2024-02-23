@@ -9635,6 +9635,7 @@ GameObject:
   - component: {fileID: 6926582088699139835}
   - component: {fileID: 6926582088699139832}
   - component: {fileID: 6926582088699139834}
+  - component: {fileID: -207165370924288875}
   m_Layer: 15
   m_Name: T_Destructible
   m_TagString: Untagged
@@ -9701,6 +9702,23 @@ MonoBehaviour:
   health: 20
   damagedParticle: {fileID: 2036019414776665537}
   destroyedParticle: {fileID: 836583274105904024}
+  spriteCollider: {fileID: 6194043656261348009}
+--- !u!208 &-207165370924288875
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6926582088699139833}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6926582090252249773
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerStateManager : MonoBehaviour, I_Shootable
 {
@@ -9,7 +10,8 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     InputManager input;
     [HideInInspector] public PlayerMovement movement;
-    public bool aim;
+    public bool aimInput;
+    bool aiming;
     public bool shoot;
     public bool interact;
 
@@ -17,7 +19,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     public Transform armSprite;
     public float aimSpeed = 10f;
 
-    private bool isFacingRight = true;
+    [HideInInspector]public bool isFacingRight = true;
 
     public Animator anim;
 
@@ -28,9 +30,14 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     Vector2 colStandSize;
 
     [Header("Shooting Components")]
+    [SerializeField] public float gunLoad = 100;
+    [SerializeField] public float maxGunLoad = 100;
+    [SerializeField] private float gunConsumption = 20;
+    [SerializeField] private float chargedConsumption = 30;
     [SerializeField] private float bulletForce = 8;
     public GameObject bulletPrefab;
-    public Transform bulletSpawn;
+    public Transform aimBulletSpawn;
+    public Transform idleBulletSpawn;
     public Transform aimTarget;
     bool canShoot;
     GameObject newBullet;
@@ -45,14 +52,19 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     [Header("Melee Components")]
     [SerializeField] public GameObject meleeCollider;
+    public bool meleeAttack;
+    bool meleeFlag;
 
     [Header("DamageSystem")]
-    [HideInInspector] public DamageSystemComponent damageSystem;
-    [SerializeField] private Material damagedMaterial;
+    [SerializeField] public Material damagedMaterial;
     [SerializeField] private Material defaultMaterial;
 
+    [HideInInspector] public DamageSystemComponent damageSystem;
 
     [Header("Sprites")]
+    [SerializeField] GameObject idleArmSprite;
+    [SerializeField] GameObject aimArmSprite1;
+    [SerializeField] GameObject aimArmSprite2;
     [SerializeField] GameObject deafultSprite;
     [SerializeField] GameObject chargedShotSprite;
     [SerializeField] GameObject jumpSprite;
@@ -64,6 +76,12 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     public AudioSource feetAudioSource;
     public AudioSource gunAudioSource;
     public AudioSource landingAudioSource;
+
+    [Header("Cameras")]
+    public CinemachineVirtualCamera playerCamera;
+    public CinemachineVirtualCamera aimCamera;
+
+    Vector2 previousAimDelta;
 
     private void Awake()
     {
@@ -121,9 +139,8 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     private void LateUpdate()
     {
-
+        
         ArmRotation();
-        //AimIKHandler();
     }
 
     private void FixedUpdate()
@@ -131,30 +148,42 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     }
 
+    void SwitchToAimCamera()
+    {
+        aimCamera.Priority = 1;
+        playerCamera.Priority = 0;
+    }
+    void SwitchToPlayerCamera()
+    {
+        aimCamera.Priority = 0;
+        playerCamera.Priority = 1;
+    }
+
     void ArmRotation()
     {
-
         lookDirection = input.aim.ReadValue<Vector2>();
 
-        //Debug.Log(lookDirection);
-        if (aim)
+        AimSprite(aiming);
+        
+        if (aimInput)
         {
-            //lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - arm.position;
-            //Debug.Log(input.inputAsset.currentControlScheme);
+            aiming = true;
+            if (aimCamera.Priority == 0)
+                SwitchToAimCamera();
+
+            if (lookDirection.x == 0 || lookDirection.y == 0)
+                return;
 
             if (input.inputAsset.currentControlScheme != "Gamepad")
             {
                 lookDirection = lookDirection - new Vector2(Screen.width / 2, Screen.height / 2);
                 if (!isFacingRight)
                     lookDirection = new Vector2(lookDirection.x * -1, lookDirection.y * -1);
-                //lookDirection = new Vector2(Screen.width / 2, Screen.height / 2) - lookDirection;
-                Debug.Log("Mouse");
             }
             else
             {
                 if (!isFacingRight)
                     lookDirection = new Vector2(lookDirection.x * -1, lookDirection.y * -1);
-                Debug.Log("Gamepad");
             }
 
             Debug.DrawRay(transform.position, lookDirection, Color.red);
@@ -163,25 +192,58 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
             angle = Mathf.Clamp(angle, -90, 90);
             Vector3 forward = arm.transform.forward;
             lookRotation = Quaternion.AngleAxis(angle, forward);
-            //arm.rotation = Quaternion.Slerp(arm.rotation, lookRotation, 100 * Time.deltaTime);
             arm.rotation = lookRotation;
             chargedPlayerSprite.arm.rotation = lookRotation;
         }
 
-        if (input.rightClick.WasReleasedThisFrame())
+        if(aiming)
+        if (input.rightClick.WasReleasedThisFrame()  || movement.running || meleeAttack)
         {
+            aiming = false;
+            SwitchToPlayerCamera();
             arm.rotation = Quaternion.identity;
             chargedPlayerSprite.arm.rotation = Quaternion.identity;
         }
     }
 
+    void AimSprite(bool aim)
+    {
+        if(aim == true)
+        {
+            aimArmSprite1.SetActive(true);
+            aimArmSprite2.SetActive(true);
+            idleArmSprite.SetActive(false);
+        }
+        else
+        {
+            aimArmSprite1.SetActive(false);
+            aimArmSprite2.SetActive(false);
+            idleArmSprite.SetActive(true);
+        }
+        if (chargedShotSprite.activeInHierarchy)
+        {
+            aimArmSprite1.SetActive(false);
+            aimArmSprite2.SetActive(false);
+            idleArmSprite.SetActive(false);
+        }
+    }
+
     void HandleMeleeAttack()
     {
+        if (meleeFlag == true)
+            return;
         if (interact)
         {
             anim.Play("MeleeAttack");
-            Debug.Log("MeleeAttack");
+            StartCoroutine(MeleeAttackFlag());
         }
+    }
+
+    IEnumerator MeleeAttackFlag()
+    {
+        meleeFlag = true;
+        yield return new WaitForSeconds(1.2f);
+        meleeFlag = false;
     }
 
     void HandleShoot()
@@ -189,13 +251,21 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         if (!canShoot)
             return;
 
+        if(gunLoad >= gunConsumption)
+
         if (shoot)
         {
             canShoot = false;
 
+            gunLoad -= gunConsumption;
+            UIManger.instance.UpdateGunLoad(gunLoad);
+
             newBullet = Instantiate(bulletPrefab);
-            //newBullet.transform.parent = bulletSpawn.parent;
-            newBullet.transform.position = bulletSpawn.position;
+            if(aiming)
+            newBullet.transform.position = aimBulletSpawn.position;
+            else
+                newBullet.transform.position = idleBulletSpawn.position;
+
             Bullet b = newBullet.GetComponent<Bullet>();
             b.aimTarget = aimTarget;
             StartCoroutine(WaitForReleaseFire(b));
@@ -204,21 +274,17 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     IEnumerator WaitForReleaseFire(Bullet bullet)
     {
-        /*while (shoot)
-        {
-            Debug.Log("holding fire");
-        }*/
         yield return new WaitUntil(ReleaseFire);
 
         float chargePercent = holdingFireTimer / chargedShotTime ;
         chargePercent *= 1;
 
-        
-        //Debug.Log("Charge percentage " + chargePercent);
         newBullet.GetComponent<Bullet>().CalculateDamage(chargePercent);
-        //Debug.Log(chargePercent);
+        
         if(chargePercent == 1)
         {
+
+            UIManger.instance.UpdateGunLoad(gunLoad);
             BulletPush();
         }
 
@@ -249,7 +315,13 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         }
         else
         {
-            newBullet.transform.localPosition = Vector3.Lerp(newBullet.transform.position, bulletSpawn.position, 200 * Time.deltaTime);
+            Vector2 spawnPoint = idleBulletSpawn.position;
+            if (aiming)
+                spawnPoint = aimBulletSpawn.position;
+            if (chargedShot)
+                spawnPoint = aimBulletSpawn.position;
+
+            newBullet.transform.localPosition = Vector3.Lerp(newBullet.transform.position, spawnPoint, 200 * Time.deltaTime);
 
             newBullet.transform.localScale = Vector3.Lerp(new Vector3(.25f, .25f, .25f), new Vector3(.8f,.8f,.8f), holdingFireTimer / chargedShotTime);
             holdingFireTimer += Time.deltaTime;
@@ -268,12 +340,11 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         float force = bulletForce;
         if (movement.crouching)
             force = 2;
-        // Debug.Log("PUSH");
+
         chargedShotSprite.SetActive(false);
         ToggleDefaultSprite(true);
         Vector3 pushDirection =  transform.position - aimTarget.position;
-        //pushDirection.z = 0;
-        //pushDirection *= -1;
+
         movement.bulletPush = true;
         Debug.DrawRay(transform.position, pushDirection, Color.red, 3);
         movement.rb.AddForce(pushDirection * force, ForceMode2D.Impulse);
@@ -297,7 +368,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     void GetInputs()
     {
-        aim = input.rightClick.ReadValue<float>() > 0;
+        aimInput = input.rightClick.ReadValue<float>() > 0 && !movement.running;
         shoot = input.leftClick.ReadValue<float>() > 0;
         interact = input.interact.ReadValue<float>() > 0;
     }
@@ -321,7 +392,8 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         anim.SetBool("jump", movement.performJump);
         anim.SetBool("falling", movement.rb.velocity.y < 0);
         anim.SetBool("grounded", movement.grounded);
-        anim.SetBool("aim", aim);
+        anim.SetBool("aim", aimInput);
+        anim.SetBool("run", movement.running);
 
         if (chargedShot && movement.rb.velocity.magnitude <= 0.1f && movement.grounded && !movement.crouching)
         {
@@ -337,13 +409,14 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
             chargedShotSprite.SetActive(false);
         }
+
     }
 
     public void ToggleDefaultSprite(bool enabled)
     {
         defaultSpriteActive = enabled;
-        SpriteRenderer[] sprites = deafultSprite.GetComponentsInChildren<SpriteRenderer>();
-        foreach(SpriteRenderer sprite in sprites)
+        PlayerSprite sprites = deafultSprite.GetComponentInChildren<PlayerSprite>();
+        foreach(SpriteRenderer sprite in sprites.sprites)
         {
             sprite.enabled = enabled;
         }
@@ -381,6 +454,12 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     public void Death()
     {
         Debug.Log("GameOver");
+    }
+
+    public void AddGunLoad(float amount)
+    {
+        gunLoad = gunLoad + amount;
+        UIManger.instance.UpdateGunLoad(gunLoad);
     }
 
     public void Heal(int amount)

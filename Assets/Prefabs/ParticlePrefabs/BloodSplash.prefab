@@ -262,6 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4994959388028026581}
   - component: {fileID: 5909802935694027523}
+  - component: {fileID: 7076135665458415669}
   m_Layer: 0
   m_Name: BloodSplash
   m_TagString: Untagged
@@ -307,3 +308,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &7076135665458415669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532959054400871976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8f732f1a3cc574e92665edac973426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 2

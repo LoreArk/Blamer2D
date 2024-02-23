@@ -93,7 +93,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: Ground_Angle_Internal_L
+  - name: Ground_AngleDown_L
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -101,6 +101,72 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
+      y: 4
+      width: 32
+      height: 32
+    spriteID: e58c93d47a6688c43ae982bda6488947
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 0, y: 0}
+  - name: Ground_AngleDown_R
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 44
+      width: 32
+      height: 32
+    spriteID: d6111d543d421b14d81d36bae0b70efc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 44}
+    spritePosition: {x: 0, y: 0}
+  - name: Ground_Down
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 84
+      width: 32
+      height: 32
+    spriteID: d755f32f9b40c4043b488ae2978636d5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 84}
+    spritePosition: {x: 0, y: 0}
+  - name: Ground_Angle_Internal_L
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
       y: 4
       width: 32
       height: 32
@@ -113,7 +179,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 44, y: 4}
     spritePosition: {x: 0, y: 0}
   - name: Ground_Angle_Internal_R
     originalName: 
@@ -122,7 +188,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
+      x: 44
       y: 44
       width: 32
       height: 32
@@ -135,7 +201,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 44}
+    uvTransform: {x: 44, y: 44}
     spritePosition: {x: 0, y: 0}
   - name: Ground_DoubleAngle_R
     originalName: 
@@ -144,7 +210,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
+      x: 44
       y: 84
       width: 32
       height: 32
@@ -157,7 +223,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 84}
+    uvTransform: {x: 44, y: 84}
     spritePosition: {x: 0, y: 0}
   - name: Ground_DoubleAngle_L
     originalName: 
@@ -166,7 +232,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 44
+      x: 84
       y: 4
       width: 32
       height: 32
@@ -179,7 +245,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 44, y: 4}
+    uvTransform: {x: 84, y: 4}
     spritePosition: {x: 0, y: 0}
   characterData:
     bones: []
@@ -295,42 +361,42 @@ ScriptedImporter:
     isImported: 0
     isVisible: 0
   - name: Ground_AngleDown_L
-    spriteName: 
+    spriteName: Ground_AngleDown_L
     isGroup: 0
     parentIndex: -1
     spriteID: e58c93d47a6688c43ae982bda6488947
     layerID: 9
-    mosaicPosition: {x: 0, y: 0}
+    mosaicPosition: {x: 4, y: 4}
     flatten: 0
-    isImported: 0
-    isVisible: 0
+    isImported: 1
+    isVisible: 1
   - name: Ground_AngleDown_R
-    spriteName: 
+    spriteName: Ground_AngleDown_R
     isGroup: 0
     parentIndex: -1
     spriteID: d6111d543d421b14d81d36bae0b70efc
     layerID: 10
-    mosaicPosition: {x: 0, y: 0}
+    mosaicPosition: {x: 4, y: 44}
     flatten: 0
-    isImported: 0
-    isVisible: 0
+    isImported: 1
+    isVisible: 1
   - name: Ground_Down
-    spriteName: 
+    spriteName: Ground_Down
     isGroup: 0
     parentIndex: -1
     spriteID: d755f32f9b40c4043b488ae2978636d5
     layerID: 8
-    mosaicPosition: {x: 0, y: 0}
+    mosaicPosition: {x: 4, y: 84}
     flatten: 0
-    isImported: 0
-    isVisible: 0
+    isImported: 1
+    isVisible: 1
   - name: Ground_Angle_Internal_L
     spriteName: Ground_Angle_Internal_L
     isGroup: 0
     parentIndex: -1
     spriteID: e360f298931c5a34187f30b6d885c613
     layerID: 11
-    mosaicPosition: {x: 4, y: 4}
+    mosaicPosition: {x: 44, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -340,7 +406,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: 7bafc3779a0c6ff4ca5a310639d3110f
     layerID: 12
-    mosaicPosition: {x: 4, y: 44}
+    mosaicPosition: {x: 44, y: 44}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -350,7 +416,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: 7ef34038cea41b84890ba077d02d9aaf
     layerID: 13
-    mosaicPosition: {x: 4, y: 84}
+    mosaicPosition: {x: 44, y: 84}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -360,7 +426,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: dd99973e958c61144b5d79c9e06f7fde
     layerID: 14
-    mosaicPosition: {x: 44, y: 4}
+    mosaicPosition: {x: 84, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1

@@ -32,7 +32,7 @@ ScriptedImporter:
     spriteExtrude: 1
     spriteMeshType: 1
     alignment: 9
-    spritePivot: {x: 0.49999997, y: 0.30580845}
+    spritePivot: {x: 0.4970987, y: 0.23618275}
     spritePixelsToUnits: 32
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
@@ -71,7 +71,7 @@ ScriptedImporter:
   spriteImportData:
   - name: Detail_4x_1
     originalName: 
-    pivot: {x: 0.49999997, y: 0.30580845}
+    pivot: {x: 0.4970987, y: 0.23618275}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:

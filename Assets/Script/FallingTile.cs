@@ -191,7 +191,7 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
 
             if (shootables.Contains(shootable))
                 return;
-
+            Debug.Log("Falling tile damage");
             DamageSettings newDamage = new DamageSettings();
             newDamage.damage = 100;
             shootable.DoDamage(newDamage);
@@ -208,7 +208,7 @@ public class FallingTile : MonoBehaviour, I_Shootable, I_JumpableNoCollision
 
     public void MakeSolidByAxis(bool vertical, bool horizontal)
     {
-        if (!isWalkableSurface)
+        if (!isWalkableSurface && vertical)
             return;
 
         if (vertical)

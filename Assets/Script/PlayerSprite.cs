@@ -7,6 +7,7 @@ public class PlayerSprite : MonoBehaviour
     public Transform arm;
     public Transform bulletSpawn;
     public Transform target;
+    public List<SpriteRenderer> sprites = new List<SpriteRenderer>();
 
     private void OnEnable()
     {
@@ -16,7 +17,7 @@ public class PlayerSprite : MonoBehaviour
     public void SpriteSetup()
     {
         //GetComponentInParent<PlayerStateManager>().arm = arm;
-        GetComponentInParent<PlayerStateManager>().bulletSpawn = bulletSpawn;
+        GetComponentInParent<PlayerStateManager>().aimBulletSpawn = bulletSpawn;
         //GetComponentInParent<PlayerStateManager>().aimTarget = target;
     }
 }
