@@ -105,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
             stateManager.AdjustCollider(crouching);
         }
 
-        if (runInput && grounded && horizontal != 0)
+        if (runInput && grounded && horizontal != 0 && !landedPhase)
         {
             running = true;
         }
@@ -214,6 +214,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
+       
 
         rb.AddForce(new Vector2(horizontal, 0f) * acceleration);
 
@@ -230,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * topSpeed, rb.velocity.y);
         }
     }
+
 
     bool OnSlope()
     {
@@ -328,8 +330,6 @@ public class PlayerMovement : MonoBehaviour
             tile.MakeSolidByAxis(true, false);
             CheckSolidTerrainHorizontal();
         }
-        
-        
     }
 
     void CheckSolidTerrainHorizontal()
