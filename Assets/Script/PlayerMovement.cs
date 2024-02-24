@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Physics")]
     [SerializeField] private float jumpPower = 5;
     [SerializeField] private float chargedJumpPower = 5;
+    [SerializeField] private float runJumpPower = 5;
     [SerializeField] private float acceleration = 50;
     [SerializeField] private float targetTopSpeed = 12f;
     [SerializeField] private float topSpeed = 12f;
@@ -56,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask fluidLayer;
     public float checkSolidRad = .3f;
     public float checkGroundingRad = .4f;
-
+    bool pushed;
 
     private void Awake()
     {
@@ -72,9 +73,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GetInput();
-        GetMovementActions();
 
-        jumping = stateManager.anim.GetBool("jumping");
+        GetMovementActions();
     }
 
     void GetInput()
@@ -89,10 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GetMovementActions()
     {
-        if (performJump)
-        {
-            Jump();
-        }
+        
 
         if (crouchPress && grounded )
         {
@@ -112,11 +109,14 @@ public class PlayerMovement : MonoBehaviour
         else
             running = false;
 
-        
+
+        jumping = stateManager.anim.GetBool("jumping");
+
     }
 
     private void FixedUpdate()
     {
+
         if (grounded)
         {
             ApplyGroundLinearDrag();
@@ -125,20 +125,20 @@ public class PlayerMovement : MonoBehaviour
         }
         if (landedPhase)
         {
-            rb.drag = 100;
+            //rb.drag = 100;
         }
         if (onFluid)
         {
             ApplyFluidLinearDrag();
         }
-        if (running)
+        if (running && !jumping)
         {
-            acceleration = 500;
+            //acceleration = 500;
             rb.gravityScale = 20;
         }
         else
         {
-            acceleration = 50;
+            //acceleration = 50;
         }
         if (!grounded)
         {
@@ -154,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (bulletPush)
         {
-            ApplyBulletPushLinearDrag();
+            //ApplyBulletPushLinearDrag();
             //Debug.Log(rb.velocity.y);
             if (rb.velocity.y < 0)
             {
@@ -168,8 +168,28 @@ public class PlayerMovement : MonoBehaviour
         else checkGroundingRad = .4f;
 
 
+
         MoveCharacter();
 
+        if (performJump)
+        {
+            Jump();
+        }
+        if (bulletPush)
+        {
+            if (!pushed)
+                BulletPush();
+        }
+        else
+            pushed = false;
+    }
+
+    public void BulletPush()
+    {
+        pushed = true;
+        Vector3 pushDirection = transform.position - stateManager.aimTarget.position;
+
+        rb.AddForce(pushDirection * 5, ForceMode2D.Impulse);
     }
 
     void ApplyBulletPushLinearDrag()
@@ -186,12 +206,14 @@ public class PlayerMovement : MonoBehaviour
         if (crouching)
         {
             jumpF = chargedJumpPower;
+            //rb.AddForce(Vector2.up * jumpF/2, ForceMode2D.Impulse);
+
             crouching = false;
         }
         landedPhase = false;
 
 
-        rb.velocity = new Vector2(rb.velocity.x, 0);
+       // rb.velocity = new Vector2(rb.velocity.x, 0);
 
         /*
         Vector2 jumpDirection = Vector2.up;
@@ -202,21 +224,31 @@ public class PlayerMovement : MonoBehaviour
                 right *= -1;
             jumpDirection += right;
         }*/
-        rb.AddForce(Vector2.up * jumpF, ForceMode2D.Impulse);
-        
+        if (running)
+        {
+            rb.AddForce(new Vector2(horizontal * runJumpPower , transform.up.y * jumpF), ForceMode2D.Impulse);
+        }
+        else
+        {
+
+            rb.AddForce(Vector2.up * jumpF, ForceMode2D.Impulse);
+        }
     }
 
     private void MoveCharacter()
     {
         if (bulletPush)
+        {
+            Debug.Log("F PUSH");
             return;
+        }
         if (crouching)
         {
             return;
         }
        
 
-        rb.AddForce(new Vector2(horizontal, 0f) * acceleration);
+        //rb.AddForce(new Vector2(horizontal, 0f) * acceleration);
 
         targetTopSpeed = topSpeed;
         if (running)
@@ -225,11 +257,14 @@ public class PlayerMovement : MonoBehaviour
         {
             targetTopSpeed = jumpTopSpeed;
         }
-        
+
+        rb.velocity = new Vector2(horizontal * targetTopSpeed, rb.velocity.y); 
+
+        /*
         if(Mathf.Abs(rb.velocity.x) > targetTopSpeed)
         {
             rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * topSpeed, rb.velocity.y);
-        }
+        }*/
     }
 
 
@@ -354,22 +389,23 @@ public class PlayerMovement : MonoBehaviour
     }
     void ApplyGroundSlopeDrag()
     {
-        rb.gravityScale = 5;
+       // rb.gravityScale = 5;
 
         if (Mathf.Abs(horizontal) == 0 || directionChange)
         {
-            rb.drag = 2500;
+            //rb.drag = 2500;
         }
         else
         {
-            if(!crouching)
-            rb.drag = slopeLinearDrag;
+           // if(!crouching)
+            //rb.drag = slopeLinearDrag;
         }
     }
     private void ApplyGroundLinearDrag()
     {
         rb.gravityScale = 1;
-        if(Mathf.Abs(horizontal) == 0 || directionChange)
+        rb.drag = 0;
+        /*if(Mathf.Abs(horizontal) == 0 || directionChange)
         {
             rb.drag = linearDrag;
         }
@@ -379,8 +415,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.drag = 1000;
-        }
+            //rb.drag = 1000;
+        }*/
         
     }
 
