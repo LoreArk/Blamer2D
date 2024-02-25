@@ -154,12 +154,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (bulletPush)
         {
+            
+
             //ApplyBulletPushLinearDrag();
             //Debug.Log(rb.velocity.y);
-            if (rb.velocity.y < 0)
-            {
-                bulletPush = false;
-            }
+            
         }
         if (onSlope)
         {
@@ -239,13 +238,23 @@ public class PlayerMovement : MonoBehaviour
     {
         if (bulletPush)
         {
+            rb.drag = 0;
+            rb.gravityScale = 1;
+            if (!pushed)
+            {
+                pushed = true;
+
+                rb.AddForce(stateManager.pushDirection * stateManager.targetBulletForce, ForceMode2D.Impulse);
+            }
+            if (rb.velocity.y < 0)
+            {
+                bulletPush = false;
+                pushed = false;
+            }
             Debug.Log("F PUSH");
             return;
         }
-        if (crouching)
-        {
-            return;
-        }
+       
        
 
         //rb.AddForce(new Vector2(horizontal, 0f) * acceleration);
@@ -257,6 +266,9 @@ public class PlayerMovement : MonoBehaviour
         {
             targetTopSpeed = jumpTopSpeed;
         }
+        if (crouching)
+            targetTopSpeed = 0;
+
 
         rb.velocity = new Vector2(horizontal * targetTopSpeed, rb.velocity.y); 
 

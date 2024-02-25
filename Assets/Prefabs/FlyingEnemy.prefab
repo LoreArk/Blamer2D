@@ -615,7 +615,7 @@ MonoBehaviour:
   spawnTransform: {fileID: 1260315361992362551}
   lookLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 772
   bulletPrefab: {fileID: 9056166726174243446, guid: 783623b0ff22b3b4b84f589b02b477a0, type: 3}
   hp: 30
   waitOnPoint: 1

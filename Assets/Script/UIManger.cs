@@ -22,7 +22,6 @@ public class UIManger : MonoBehaviour
         healthBar = GetComponentInChildren<HealthBarHUD>();
         
         player = PlayerStateManager.Instance;
-        Debug.Log(player);
         playerDamageComponent = player.gameObject.GetComponent<DamageSystemComponent>();
         Debug.Log(playerDamageComponent);
         healthBar.UpdateHealthBar(playerDamageComponent.maxHealth);

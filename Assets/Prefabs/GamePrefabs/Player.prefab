@@ -2413,9 +2413,9 @@ MonoBehaviour:
   bodyCollider: {fileID: 0}
   gunLoad: 100
   maxGunLoad: 100
-  gunConsumption: 20
+  gunConsumption: 10
   chargedConsumption: 30
-  bulletForce: 8
+  bulletForce: 5
   bulletPrefab: {fileID: 7294887722451433186, guid: 4914cd3681c67b246962f21b7daab352, type: 3}
   aimBulletSpawn: {fileID: 7766846285206055164}
   idleBulletSpawn: {fileID: 7105892006347617861}
@@ -2424,6 +2424,8 @@ MonoBehaviour:
   chargedShotTime: 2
   laserStart: {fileID: 7766846286164330687}
   laser: {fileID: 0}
+  pushDirection: {x: 0, y: 0}
+  targetBulletForce: 0
   meleeCollider: {fileID: 7766846285277834459}
   meleeAttack: 0
   damagedMaterial: {fileID: 2100000, guid: 9de52fc5e13c4b64f9413cb0e164e9d9, type: 2}
@@ -2455,6 +2457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpPower: 35
   chargedJumpPower: 45
+  runJumpPower: 5
   acceleration: 50
   targetTopSpeed: 12
   topSpeed: 5

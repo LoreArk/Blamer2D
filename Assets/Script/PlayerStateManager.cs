@@ -19,7 +19,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     public Transform armSprite;
     public float aimSpeed = 10f;
 
-    [HideInInspector]public bool isFacingRight = true;
+    [HideInInspector] public bool isFacingRight = true;
 
     public Animator anim;
 
@@ -49,6 +49,8 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     bool chargedShot;
     [SerializeField] public Transform laserStart;
     [HideInInspector] public Laser laser;
+    [HideInInspector] public Vector2 pushDirection;
+    [HideInInspector] public float targetBulletForce;
 
     [Header("Melee Components")]
     [SerializeField] public GameObject meleeCollider;
@@ -337,17 +339,16 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     private void BulletPush()
     {
-        float force = bulletForce;
+        targetBulletForce = bulletForce;
         if (movement.crouching)
-            force = 2;
+            targetBulletForce = 0.5f;
 
         chargedShotSprite.SetActive(false);
         ToggleDefaultSprite(true);
-        Vector3 pushDirection =  transform.position - aimTarget.position;
+        pushDirection =  transform.position - aimTarget.position;
 
         movement.bulletPush = true;
         Debug.DrawRay(transform.position, pushDirection, Color.red, 3);
-        movement.rb.AddForce(pushDirection * force, ForceMode2D.Impulse);
     }
 
     private void FlipSprites()

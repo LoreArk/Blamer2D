@@ -281,9 +281,10 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
         hit = Physics2D.Raycast(origin, playerDirection, sightRange, ~lookLayer);
 
+        Debug.Log(hit.collider.gameObject.name);
         if (!hit)
         {
-            // Debug.Log(hit.collider.gameObject.name);
+            Debug.Log(hit.collider.gameObject.name);
             return false;
         }
 
@@ -376,8 +377,8 @@ public class EnemyState : MonoBehaviour, I_Shootable
     {
         if (!dead)
             return;
-
-        if (collision.collider.gameObject.layer == 3)
+        Debug.Log(collision.gameObject.layer);
+        if (collision.collider.gameObject.layer == 3 || collision.collider.gameObject.layer == 15 || collision.collider.gameObject.layer == 16)
         {
             GameObject inst = Instantiate(explosionPrefab);
             inst.transform.position = transform.position;
