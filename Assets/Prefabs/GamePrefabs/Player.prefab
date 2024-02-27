@@ -2455,14 +2455,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35453dae632033146a0cd8e991a2652b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 35
-  chargedJumpPower: 45
-  runJumpPower: 5
+  jumpPower: 40
+  chargedJumpPower: 53
+  runJumpPower: 50
   acceleration: 50
   targetTopSpeed: 12
   topSpeed: 5
-  runTopSpeed: 12
-  jumpTopSpeed: 18
+  runTopSpeed: 19
+  jumpTopSpeed: 8
+  runJumpTopSpeed: 18
   linearDrag: 10
   slopeLinearDrag: 4
   fluidDrag: 15

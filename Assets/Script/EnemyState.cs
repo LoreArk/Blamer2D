@@ -378,7 +378,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
         if (!dead)
             return;
         Debug.Log(collision.gameObject.layer);
-        if (collision.collider.gameObject.layer == 3 || collision.collider.gameObject.layer == 15 || collision.collider.gameObject.layer == 16)
+        if (collision.collider.gameObject.layer == 3 || collision.collider.gameObject.layer == 15 || collision.collider.gameObject.layer == 16 || collision.collider.gameObject.layer == 11)
         {
             GameObject inst = Instantiate(explosionPrefab);
             inst.transform.position = transform.position;

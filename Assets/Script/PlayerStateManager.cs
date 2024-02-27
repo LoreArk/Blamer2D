@@ -34,7 +34,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     [SerializeField] public float maxGunLoad = 100;
     [SerializeField] private float gunConsumption = 20;
     [SerializeField] private float chargedConsumption = 30;
-    [SerializeField] private float bulletForce = 8;
+    [SerializeField] public float bulletForce = 8;
     public GameObject bulletPrefab;
     public Transform aimBulletSpawn;
     public Transform idleBulletSpawn;
@@ -270,6 +270,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
             Bullet b = newBullet.GetComponent<Bullet>();
             b.aimTarget = aimTarget;
+
             StartCoroutine(WaitForReleaseFire(b));
         }
     }
@@ -322,6 +323,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
                 spawnPoint = aimBulletSpawn.position;
             if (chargedShot)
                 spawnPoint = aimBulletSpawn.position;
+            
 
             newBullet.transform.localPosition = Vector3.Lerp(newBullet.transform.position, spawnPoint, 200 * Time.deltaTime);
 

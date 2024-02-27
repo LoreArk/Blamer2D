@@ -19,8 +19,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject hitParticlePrefab;
     [SerializeField] private GameObject hitParticlePrefab2;
     [SerializeField] private GameObject hitParticlePrefab3;
-   // [SerializeField] private Animator animator;
-   // [SerializeField] private GameObject bulletSprite;
+    // [SerializeField] private Animator animator;
+    // [SerializeField] private GameObject bulletSprite;
+
+    private ParticleSystem chargeParticles;
 
     private void Awake()
     {
@@ -32,6 +34,7 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        chargeParticles = GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -54,7 +57,7 @@ public class Bullet : MonoBehaviour
 
     public void LaunchBullet()
     {
-
+        StopParticles();
         launched = true;
         direction = aimTarget.position - transform.position;
         GetComponent<SpriteRenderer>().renderingLayerMask = 0;
@@ -175,6 +178,16 @@ public class Bullet : MonoBehaviour
                 
         }
 
+    }
+
+    public void PlayParticles()
+    {
+        chargeParticles.Play();
+    }
+
+    public void StopParticles()
+    {
+        chargeParticles.Stop();
     }
 
     private void OnDrawGizmos()
