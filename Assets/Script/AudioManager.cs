@@ -14,7 +14,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private EnemySounds enemySounds;
 
     [SerializeField] private FallingTilesSounds fallingTilesSounds;
+    [SerializeField] private UISounds uiSounds;
 
+    AudioSource ambienceSource;
 
     private void Awake()
     {
@@ -23,7 +25,17 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        
+        ambienceSource = GetComponentInChildren<AudioSource>();
+    }
+
+    public void PauseAmbience()
+    {
+        ambienceSource.Pause();
+    }
+
+    public void ResumeAmbience()
+    {
+        ambienceSource.Play();
     }
 
     public void PlayerFootsteps(AudioSource source)
@@ -136,7 +148,38 @@ public class AudioManager : MonoBehaviour
         source.Play();
     }
 
-    
+    public void PlayButtonSound(AudioSource source)
+    {
+        Sound sound = uiSounds.buttonPressed;
+
+        source.clip = sound.audioClip;
+        source.pitch = sound.maxPitch;
+        source.volume = sound.maxVolume * masterVolume;
+
+        source.Play();
+    }
+
+    public void PlayStartButtonSound(AudioSource source)
+    {
+        Sound sound = uiSounds.startGameButton;
+
+        source.clip = sound.audioClip;
+        source.pitch = sound.maxPitch;
+        source.volume = sound.maxVolume * masterVolume;
+
+        source.Play();
+    }
+
+    public void PlayButtonSelectionSound(AudioSource source)
+    {
+        Sound sound = uiSounds.buttonSelected;
+
+        source.clip = sound.audioClip;
+        source.pitch = sound.maxPitch;
+        source.volume = sound.maxVolume * masterVolume;
+
+        source.PlayOneShot(sound.audioClip);
+    }
 
 }
 
@@ -181,3 +224,10 @@ class Sound
     [Range(0, 1)] [SerializeField] public float minVolume, maxVolume;
 }
 
+[System.Serializable]
+class UISounds
+{
+   public Sound buttonSelected;
+    public Sound buttonPressed;
+    public Sound startGameButton;
+}

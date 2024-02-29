@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Components")]
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public Transform groundCheck;
+    [SerializeField] public Transform groundCheckFalling;
     [SerializeField] public Transform checkJumpableGround;
     [SerializeField] public Transform feetPosition;
     [SerializeField] private LayerMask groundLayer;
@@ -62,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     public float checkGroundingRad = .4f;
     bool pushed;
     bool shouldJump;
+    Vector2 groundCheckPosition;
 
     private void Awake()
     {
@@ -302,7 +304,11 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, checkGroundingRad, groundLayer);
+        groundCheckPosition = groundCheck.position;
+        if (rb.velocity.y < 0 && jumping)
+            groundCheckPosition = groundCheckFalling.position;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckPosition, checkGroundingRad, groundLayer);
 
 
         if (colliders.Length <= 0)
@@ -485,6 +491,6 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(checkJumpableGround.position, checkSolidRad);
         
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(groundCheck.position, checkGroundingRad);
+        Gizmos.DrawWireSphere(groundCheckPosition, checkGroundingRad);
     }
 }

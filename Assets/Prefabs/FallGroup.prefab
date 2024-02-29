@@ -53,7 +53,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 50
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -177,7 +177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiles: []
-  particleSpawnPoints: []
   particlePrefab: {fileID: 7819472158531343006, guid: 3fce67f7d1045b749956cb4b9e0202b7, type: 3}
 --- !u!61 &3278928312362399556
 BoxCollider2D:

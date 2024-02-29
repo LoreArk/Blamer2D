@@ -14,6 +14,7 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
     public GameObject sprite;
     bool isFacingRight = true;
     bool isFacingDown = true;
+    [SerializeField] private LayerMask damageLayer;
 
     private void Start()
     {
@@ -25,6 +26,11 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
         player = PlayerStateManager.Instance;
         
         InvokeRepeating("FollowPlayer", .2f, 3);
+
+        damageSettings = new DamageSettings();
+        damageSettings.damage = 1;
+
+        Physics2D.IgnoreCollision(player.bodyCollider, GetComponent<CircleCollider2D>());
     }
 
 
@@ -37,7 +43,7 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
             transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
-
+        DamageTrigger();
 
         HandleFlip();
     }
@@ -66,25 +72,25 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
 
     }
 
+    void DamageTrigger()
+    {
+        Collider2D[] overlapping = Physics2D.OverlapCircleAll(transform.position, 0.5f, damageLayer);
+
+        foreach(Collider2D col in overlapping)
+        {
+            I_Shootable shootable = col.gameObject.GetComponent<I_Shootable>();
+            if (shootable == null)
+                continue;
+
+            shootable.DoDamage(damageSettings);
+        }
+    }
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
         //Debug.Log(collision.gameObject.layer);
-        I_Shootable shootable = collision.gameObject.GetComponent<I_Shootable>();
-
-        damageSettings = new DamageSettings();
-        damageSettings.damage = 1;
         
-        if(collision.gameObject.layer == 3 || collision.gameObject.layer == 6)
-        {
-            //Destroy(gameObject);
-        }
-
-        if (shootable == null)
-            return;
-
-
-        shootable.DoDamage(damageSettings);
-
+        
         //Destroy(gameObject);
     }
 

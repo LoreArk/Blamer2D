@@ -1672,6 +1672,37 @@ MonoBehaviour:
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
+--- !u!1 &5814883075469514715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2613136209654093498}
+  m_Layer: 0
+  m_Name: GroundCheck_Falling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2613136209654093498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5814883075469514715}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.183, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7766846284249102911}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5906826194458995424
 GameObject:
   m_ObjectHideFlags: 0
@@ -2386,6 +2417,7 @@ Transform:
   - {fileID: 895692083973904558}
   - {fileID: 6947592778830634661}
   - {fileID: 1088624137319642447}
+  - {fileID: 2613136209654093498}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2431,9 +2463,9 @@ MonoBehaviour:
   damagedMaterial: {fileID: 2100000, guid: 9de52fc5e13c4b64f9413cb0e164e9d9, type: 2}
   defaultMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   damageSystem: {fileID: 0}
-  idleArmSprite: {fileID: 298895381856422263}
-  aimArmSprite1: {fileID: 0}
-  aimArmSprite2: {fileID: 0}
+  idleArmSprite: {fileID: 3389729979562133554}
+  aimArmSprite1: {fileID: 298895381856422263}
+  aimArmSprite2: {fileID: 4065391688693908725}
   deafultSprite: {fileID: 7795359681760864350}
   chargedShotSprite: {fileID: 7795359681346350729}
   jumpSprite: {fileID: 5483402814780596481, guid: 36c1120c3d886184cbc8bdaaf2cdba0e, type: 3}
@@ -2488,6 +2520,7 @@ MonoBehaviour:
   landedPhase: 0
   rb: {fileID: 7766846284249102909}
   groundCheck: {fileID: 7766846284301872457}
+  groundCheckFalling: {fileID: 2613136209654093498}
   checkJumpableGround: {fileID: 7766846284252627627}
   feetPosition: {fileID: 7766846284438141706}
   groundLayer:
@@ -2810,6 +2843,15 @@ MonoBehaviour:
       m_Action: Run
       m_Flags: 0
     m_Flags: 0
+  exit:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!114 &7766846284249102883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2824,6 +2866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   health: 5
+  isInvincible: 0
   onDeath:
     m_PersistentCalls:
       m_Calls:
@@ -2869,7 +2912,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  invincibilityTime: 0.8
+  invincibilityTime: 1
 --- !u!50 &7766846284249102909
 Rigidbody2D:
   serializedVersion: 4

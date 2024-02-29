@@ -57,6 +57,7 @@ public class Bullet : MonoBehaviour
 
     public void LaunchBullet()
     {
+
         StopParticles();
         launched = true;
         direction = aimTarget.position - transform.position;
@@ -139,6 +140,18 @@ public class Bullet : MonoBehaviour
         }
             
         GetMagnitude();
+    }
+
+    public void SpawnHitParticleAndDestroy()
+    {
+        GameObject hitToSpawn = hitParticlePrefab;
+        if (charge == 1)
+            hitToSpawn = hitParticlePrefab2;
+        if (isCharged)
+            hitToSpawn = hitParticlePrefab3;
+
+        Instantiate(hitToSpawn, transform.position, Quaternion.Euler(0, 0, 0));
+        Destroy(gameObject);
     }
 
     void RaycastShootable()

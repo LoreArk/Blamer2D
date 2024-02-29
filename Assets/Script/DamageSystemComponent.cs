@@ -7,8 +7,8 @@ public class DamageSystemComponent : MonoBehaviour
 {
     [SerializeField] public int maxHealth;
     [SerializeField] public int health;
-    private bool isDead;
-    private bool isInvincible;
+    public bool isDead;
+    [HideInInspector] public bool isInvincible;
     [SerializeField] public UnityEvent onDeath;
     [SerializeField] public UnityEvent onDamage;
     [SerializeField] public UnityEvent onHeal;
@@ -29,6 +29,9 @@ public class DamageSystemComponent : MonoBehaviour
     {
         if (isInvincible)
             return;
+        if (isDead)
+            return;
+
 
         health -= dmg.damage;
         onDamage.Invoke();

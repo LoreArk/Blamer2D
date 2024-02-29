@@ -210,6 +210,14 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     void AimSprite(bool aim)
     {
+        if (damageSystem.isDead)
+        {
+            aimArmSprite1.SetActive(false);
+            aimArmSprite2.SetActive(false);
+            idleArmSprite.SetActive(true);
+            return;
+        }
+
         if(aim == true)
         {
             aimArmSprite1.SetActive(true);
@@ -259,6 +267,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         {
             canShoot = false;
 
+            GameManager.instance.usedEnergy += gunConsumption;
             gunLoad -= gunConsumption;
             UIManger.instance.UpdateGunLoad(gunLoad);
 
@@ -279,27 +288,37 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     {
         yield return new WaitUntil(ReleaseFire);
 
-        float chargePercent = holdingFireTimer / chargedShotTime ;
-        chargePercent *= 1;
-
-        newBullet.GetComponent<Bullet>().CalculateDamage(chargePercent);
-        
-        if(chargePercent == 1)
+        if (damageSystem.isDead)
         {
+            chargedShot = false;
+            newBullet.GetComponent<Bullet>().SpawnHitParticleAndDestroy();
 
-            UIManger.instance.UpdateGunLoad(gunLoad);
-            BulletPush();
         }
+        else
+        {
+            float chargePercent = holdingFireTimer / chargedShotTime;
+            chargePercent *= 1;
 
-        int chargeLevel = 0;
-        if (chargePercent > .5f) chargeLevel = 1;
-        if (chargePercent == 1) chargeLevel = 2;
-        AudioManager.instance.PlayGunshot(gunAudioSource, chargeLevel);
+            newBullet.GetComponent<Bullet>().CalculateDamage(chargePercent);
 
-        holdingFireTimer = 0;
-        newBullet.transform.parent = null;
-        bullet.LaunchBullet();
-        StartCoroutine(RatioTimer());
+            if (chargePercent == 1)
+            {
+
+                UIManger.instance.UpdateGunLoad(gunLoad);
+                BulletPush();
+            }
+
+            int chargeLevel = 0;
+            if (chargePercent > .5f) chargeLevel = 1;
+            if (chargePercent == 1) chargeLevel = 2;
+            AudioManager.instance.PlayGunshot(gunAudioSource, chargeLevel);
+
+            holdingFireTimer = 0;
+            newBullet.transform.parent = null;
+            bullet.LaunchBullet();
+            StartCoroutine(RatioTimer());
+        }
+        
     }
 
     IEnumerator RatioTimer()
@@ -318,10 +337,13 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         }
         else
         {
+            if (damageSystem.isDead)
+                return true;
+
             Vector2 spawnPoint = idleBulletSpawn.position;
             if (aiming)
                 spawnPoint = aimBulletSpawn.position;
-            if (chargedShot)
+            if (chargedShot && chargedPlayerSprite.isActiveAndEnabled)
                 spawnPoint = aimBulletSpawn.position;
             
 
@@ -378,6 +400,13 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     void HandleAnim()
     {
+        if (damageSystem.isDead)
+        {
+            ToggleDefaultSprite(true);
+            chargedShotSprite.SetActive(false);
+            return;
+        }
+
         float walk = movement.rb.velocity.x;
         if (movement.horizontal == 0)
             walk = 0;
@@ -432,21 +461,30 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     public void DoDamage(DamageSettings dmg)
     {
         damageSystem.DoDamage(dmg);
+        if(!damageSystem.isInvincible)
         StartCoroutine(damageSystem.Invincibility());
 
         StartCoroutine(SetDamageMaterial());
+
+        GameManager.instance.damageReceived ++;
     }
 
     private IEnumerator SetDamageMaterial()
     {
-        SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
-        foreach (SpriteRenderer sprite in sprites)
-        {
-            sprite.material = damagedMaterial;
-            sprite.material.color = Color.red;
-        }
-        yield return new WaitForSeconds(.3f);
 
+        SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
+        if (!damageSystem.isDead)
+        {
+            foreach (SpriteRenderer sprite in sprites)
+            {
+                sprite.material = damagedMaterial;
+                //sprite.material.color = Color.red;
+            }
+        }
+
+        
+        yield return new WaitForSeconds(.3f);
+        
         foreach (SpriteRenderer sprite in sprites)
         {
             sprite.material = defaultMaterial;
@@ -457,6 +495,17 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     public void Death()
     {
         Debug.Log("GameOver");
+        input.DisableGameInput();
+        anim.Play("Death");
+
+        SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
+        
+
+        foreach (SpriteRenderer sprite in sprites)
+        {
+            sprite.material = defaultMaterial;
+            sprite.material.color = Color.white;
+        }
     }
 
     public void AddGunLoad(float amount)

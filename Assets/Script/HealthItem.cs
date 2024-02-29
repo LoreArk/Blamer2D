@@ -13,6 +13,7 @@ public class HealthItem : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         sprite = GetComponent<SpriteRenderer>();
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,6 +36,7 @@ public class HealthItem : MonoBehaviour
                 used = true;
 
                 sprite.enabled = false;
+
                 Destroy(gameObject, 2);
             }
         }

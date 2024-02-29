@@ -500,6 +500,9 @@ MonoBehaviour:
   bloodParticle: {fileID: 5532959054400871976, guid: 49ac106479d80fc4db2e59072d755516, type: 3}
   enemy: {fileID: 0}
   sprite: {fileID: 1566758086217811821}
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 136
 --- !u!195 &2268313359929342548
 NavMeshAgent:
   m_ObjectHideFlags: 0

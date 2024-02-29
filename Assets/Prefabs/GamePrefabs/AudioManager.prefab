@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7092311d1a9b2b1439d32f3299e0dc96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolume: 1
+  masterVolume: 0.72
   playerSounds:
     footsteps:
     - audioClip: {fileID: 8300000, guid: a1a3856583d0e994390a9bcf9c61fd31, type: 3}
@@ -70,7 +70,7 @@ MonoBehaviour:
       minPitch: 0.42
       maxPitch: 0.42
       minVolume: 0.274
-      maxVolume: 0.408
+      maxVolume: 0.3
     - audioClip: {fileID: 8300000, guid: 5b04eed7b0e85cd448a86bc80a62ba51, type: 3}
       minPitch: 0.5
       maxPitch: 0.5
@@ -92,9 +92,9 @@ MonoBehaviour:
     meleeSlash:
       audioClip: {fileID: 8300000, guid: bc83a060fdc6ff14e9086be021247c12, type: 3}
       minPitch: 1
-      maxPitch: 0.78
-      minVolume: 1
-      maxVolume: 1
+      maxPitch: 0.58
+      minVolume: 0.29
+      maxVolume: 0.3
     heal:
       audioClip: {fileID: 0}
       minPitch: 0
@@ -124,14 +124,14 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: 3377a73b96153484cb46e091ce3edecd, type: 3}
       minPitch: 1
       maxPitch: 1
-      minVolume: 1
-      maxVolume: 1
+      minVolume: 0.68
+      maxVolume: 0.68
     impact:
       audioClip: {fileID: 8300000, guid: 108f60f3357cd644783f3961501ff856, type: 3}
       minPitch: 1
       maxPitch: 1
-      minVolume: 1
-      maxVolume: 1
+      minVolume: 0.7
+      maxVolume: 0.72
   fallingTilesSounds:
     tileActivated:
       audioClip: {fileID: 8300000, guid: aa4d401551bd3024a9ee209306db6ae7, type: 3}
@@ -150,9 +150,28 @@ MonoBehaviour:
       minPitch: 1
       maxPitch: 1
       minVolume: 1
-      maxVolume: 1
+      maxVolume: 0.62
     groupLanded:
       audioClip: {fileID: 8300000, guid: a8ec10f13aaae2345b388ffcd3ce3e1b, type: 3}
+      minPitch: 1
+      maxPitch: 1
+      minVolume: 1
+      maxVolume: 0.68
+  uiSounds:
+    buttonSelected:
+      audioClip: {fileID: 8300000, guid: 01800dea9c85ed84ebed0954165d297f, type: 3}
+      minPitch: 1
+      maxPitch: 0.64
+      minVolume: 1
+      maxVolume: 1
+    buttonPressed:
+      audioClip: {fileID: 0}
+      minPitch: 0
+      maxPitch: 0
+      minVolume: 0
+      maxVolume: 0
+    startGameButton:
+      audioClip: {fileID: 8300000, guid: 9ffaedd3f9d326149ab70dad874fb3b4, type: 3}
       minPitch: 1
       maxPitch: 1
       minVolume: 1

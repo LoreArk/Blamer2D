@@ -69,16 +69,18 @@ public class EnemyState : MonoBehaviour, I_Shootable
         eyeAudioSource.volume = eyeAudioSource.volume * AudioManager.instance.masterVolume;
         bodyAudioSource.volume = bodyAudioSource.volume * AudioManager.instance.masterVolume;
         damageAudioSource.volume = bodyAudioSource.volume * AudioManager.instance.masterVolume;
+
+        GameManager.instance.totalEnemies++;
     }
 
     void Update()
     {
+        if (dead)
+            return;
         if (hp <= 0)
         {
             Death();
         }
-        if (dead)
-            return;
 
         switch (aiState)
         {
@@ -371,6 +373,8 @@ public class EnemyState : MonoBehaviour, I_Shootable
         rb.gravityScale = 12;
         rb.constraints = RigidbodyConstraints2D.None;
         eyeLight.gameObject.SetActive(false);
+        Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), playerState.bodyCollider);
+        GameManager.instance.enemiesKilled++;
     }
 
     void OnCollisionEnter2D(Collision2D collision)

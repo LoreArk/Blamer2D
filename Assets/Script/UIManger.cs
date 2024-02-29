@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class UIManger : MonoBehaviour
 {
@@ -12,6 +14,22 @@ public class UIManger : MonoBehaviour
     [SerializeField] private TMP_Text uiTextMessage;
     [SerializeField] private TMP_Text gunLoad;
 
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject gameoverMenu;
+    bool pause = false;
+    bool gameOver = false;
+
+    EventSystem eventSystem;
+    GameObject lastSelected;
+    AudioSource buttonAudio;
+
+    [Header("Win Menu Components")]
+    [SerializeField] private GameObject winMenu;
+    [SerializeField] private TMP_Text enemies;
+    [SerializeField] private TMP_Text energyConsumed;
+    [SerializeField] private TMP_Text damageReceived;
+    [SerializeField] private TMP_Text time;
+
     private void Awake()
     {
         instance = this;
@@ -19,18 +37,43 @@ public class UIManger : MonoBehaviour
 
     void Start()
     {
+        eventSystem = FindAnyObjectByType<EventSystem>();
         healthBar = GetComponentInChildren<HealthBarHUD>();
         
         player = PlayerStateManager.Instance;
         playerDamageComponent = player.gameObject.GetComponent<DamageSystemComponent>();
         Debug.Log(playerDamageComponent);
         healthBar.UpdateHealthBar(playerDamageComponent.maxHealth);
+        buttonAudio = GetComponentInChildren<AudioSource>();
+
+        Time.timeScale = 1;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+        if(pause || gameOver)
+        if (lastSelected != eventSystem.currentSelectedGameObject && lastSelected != null)
+        {
+            AudioManager.instance.PlayButtonSelectionSound(buttonAudio);
+        }
+
+        lastSelected = eventSystem.currentSelectedGameObject;
+
+        if (gameOver)
+            return;
+
+        if (InputManager.instance.exit.WasPressedThisFrame())
+        {
+            pause = !pause;
+            PauseInput();
+        }
+
+        if(pause)
+        if (InputManager.instance.inputAsset.currentControlScheme != "Gamepad")
+        {
+                //eventSystem.SetSelectedGameObject(null);
+        }
     }
 
     public void UpdateHealthBar()
@@ -64,5 +107,81 @@ public class UIManger : MonoBehaviour
     {
         uiTextMessage.gameObject.SetActive(false);
 
+    }
+
+    public void LoadScene(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
+
+    void PauseInput()
+    {
+        if (pause)
+        {
+            PauseMenu();
+        }
+        else
+        {
+            ExitPause();
+        }
+    }
+
+    public void PauseMenu()
+    {
+        AudioManager.instance.PauseAmbience();
+        InputManager.instance.DisableGameInput();
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void GameOverMenu()
+    {
+        gameOver = true;
+        DisableUIMessage();
+        InputManager.instance.DisableGameInput();
+        GetComponent<Animator>().Play("death");
+        StartCoroutine(WaitBeforeDeath());
+    }
+
+    IEnumerator WaitBeforeDeath()
+    {
+        yield return new WaitForSeconds(2);
+        gameoverMenu.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+
+
+    public void ExitPause()
+    {
+        AudioManager.instance.ResumeAmbience();
+        InputManager.instance.EnableGameInput();
+
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void WinMenu()
+    {
+       // Time.timeScale = 0;
+        GameManager manager = GameManager.instance;
+
+        time.text = manager.time.ToString();
+        enemies.text = manager.enemiesKilled.ToString() + "/" + manager.totalEnemies.ToString();
+        damageReceived.text = manager.damageReceived.ToString();
+        energyConsumed.text = manager.usedEnergy.ToString();
+
+        GetComponent<Animator>().Play("win");
+    }
+
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
+
+    public void SetSelectedButton(GameObject gameObject)
+    {
+        eventSystem.SetSelectedGameObject(gameObject);
     }
 }
