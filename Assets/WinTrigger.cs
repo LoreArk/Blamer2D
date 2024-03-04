@@ -13,7 +13,10 @@ public class WinTrigger : MonoBehaviour
         {
             PlayerStateManager player = collision.gameObject.GetComponent<PlayerStateManager>();
             if (player != null)
+            {
+                GameManager.instance.EndGame();
                 onWin.Invoke();
+            }
         }
     }
 }

@@ -314,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
         if (colliders.Length <= 0)
         {
 
-            Debug.Log(" NO GROUND");
+           // Debug.Log(" NO GROUND");
             return false;
         }
 

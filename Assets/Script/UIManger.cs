@@ -42,7 +42,7 @@ public class UIManger : MonoBehaviour
         
         player = PlayerStateManager.Instance;
         playerDamageComponent = player.gameObject.GetComponent<DamageSystemComponent>();
-        Debug.Log(playerDamageComponent);
+       // Debug.Log(playerDamageComponent);
         healthBar.UpdateHealthBar(playerDamageComponent.maxHealth);
         buttonAudio = GetComponentInChildren<AudioSource>();
 
@@ -141,12 +141,14 @@ public class UIManger : MonoBehaviour
         InputManager.instance.DisableGameInput();
         GetComponent<Animator>().Play("death");
         StartCoroutine(WaitBeforeDeath());
+
     }
 
     IEnumerator WaitBeforeDeath()
     {
         yield return new WaitForSeconds(2);
         gameoverMenu.SetActive(true);
+        AudioManager.instance.PlayDeathAudio();
         Time.timeScale = 0;
     }
 
@@ -163,9 +165,10 @@ public class UIManger : MonoBehaviour
 
     public void WinMenu()
     {
-       // Time.timeScale = 0;
+        // Time.timeScale = 0;
+        gameOver = true;
         GameManager manager = GameManager.instance;
-
+        InputManager.instance.DisableGameInput();
         time.text = manager.time.ToString();
         enemies.text = manager.enemiesKilled.ToString() + "/" + manager.totalEnemies.ToString();
         damageReceived.text = manager.damageReceived.ToString();

@@ -191,7 +191,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
     {
         waiting = true;
         yield return new WaitForSeconds(.2f);
-        Debug.Log("CHANGE ATTACK SPOT: " + availableAttackPoints.Count + " " + availableAttackSpotIndex);
+       // Debug.Log("CHANGE ATTACK SPOT: " + availableAttackPoints.Count + " " + availableAttackSpotIndex);
         
         availableAttackSpotIndex++;
         waiting = false;
@@ -283,7 +283,7 @@ public class EnemyState : MonoBehaviour, I_Shootable
 
         hit = Physics2D.Raycast(origin, playerDirection, sightRange, ~lookLayer);
 
-        Debug.Log(hit.collider.gameObject.name);
+      //  Debug.Log(hit.collider.gameObject.name);
         if (!hit)
         {
             Debug.Log(hit.collider.gameObject.name);

@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audioclips")]
     [SerializeField] private PlayerSounds playerSounds;
+    [SerializeField] private Sound deathSound;
     [SerializeField] private EnemySounds enemySounds;
 
     [SerializeField] private FallingTilesSounds fallingTilesSounds;
@@ -36,6 +37,16 @@ public class AudioManager : MonoBehaviour
     public void ResumeAmbience()
     {
         ambienceSource.Play();
+    }
+
+    public void PlayDeathAudio()
+    {
+        ambienceSource.clip = deathSound.audioClip;
+        ambienceSource.pitch = deathSound.maxPitch;
+        ambienceSource.volume = deathSound.maxVolume * masterVolume;
+        ambienceSource.loop = false;
+        ambienceSource.Play();
+
     }
 
     public void PlayerFootsteps(AudioSource source)
@@ -72,6 +83,49 @@ public class AudioManager : MonoBehaviour
         //source.Play();
     }
 
+    public void PlayerDeathLand(AudioSource source)
+    {
+        Sound sound = playerSounds.deathLanding;
+
+        source.clip = sound.audioClip;
+        source.pitch = sound.maxPitch;
+        source.volume = sound.maxVolume * masterVolume;
+
+        source.PlayOneShot(sound.audioClip);
+        //source.Play();
+    }
+
+    public void PlayerDamaged(AudioSource source)
+    {
+        Sound sound = playerSounds.damage;
+
+        source.clip = sound.audioClip;
+        source.pitch = sound.maxPitch;
+        source.volume = sound.maxVolume * masterVolume;
+        source.Play();
+    }
+
+    public void PlayerDeathDamage(AudioSource source)
+    {
+        Sound sound = playerSounds.deathDamage;
+
+        source.clip = sound.audioClip;
+        source.pitch = sound.maxPitch;
+        source.volume = sound.maxVolume * masterVolume;
+        source.Play();
+    }
+
+    public void PlayerChargingShot(AudioSource source)
+    {
+        Sound sound = playerSounds.chargingShot;
+
+        source.clip = sound.audioClip;
+        source.pitch = sound.maxPitch;
+        source.volume = sound.maxVolume * masterVolume;
+        source.loop = true;
+        source.Play();
+    }
+
     public void PlayGunshot(AudioSource source, int chargeLevel)
     {
         Sound sound = playerSounds.shoot[chargeLevel];
@@ -79,6 +133,7 @@ public class AudioManager : MonoBehaviour
         source.clip = sound.audioClip;
         source.pitch = Random.Range(sound.minPitch, sound.maxPitch);
         source.volume = Random.Range(sound.minVolume, sound.maxVolume) * masterVolume;
+        source.loop = false;
         source.Play();
 
     }
@@ -190,8 +245,10 @@ class PlayerSounds
     public List<Sound> landing;
     public List<Sound> jump;
     public List<Sound> shoot;
-    public List<AudioClip> chargedShot;
-    public List<AudioClip> damage;
+    public Sound chargingShot;
+    public Sound damage;
+    public Sound deathLanding;
+    public Sound deathDamage;
     public Sound death;
     public Sound meleeSlash;
     public Sound heal;

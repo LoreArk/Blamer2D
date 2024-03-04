@@ -7,10 +7,12 @@ public class LoadItem : MonoBehaviour
     [SerializeField] private float amount;
     bool used;
     SpriteRenderer sprite;
+    AudioSource audioSource;
 
     private void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -34,8 +36,10 @@ public class LoadItem : MonoBehaviour
 
                 collision.GetComponent<PlayerStateManager>().AddGunLoad(load);
 
-               // audioSource.volume = audioSource.volume * AudioManager.instance.masterVolume;
-               // audioSource.Play();
+                audioSource.volume = audioSource.volume * AudioManager.instance.masterVolume;
+                audioSource.Play();
+                // audioSource.volume = audioSource.volume * AudioManager.instance.masterVolume;
+                // audioSource.Play();
                 used = true;
 
                 sprite.enabled = false;

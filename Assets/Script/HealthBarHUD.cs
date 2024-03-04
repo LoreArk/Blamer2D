@@ -9,7 +9,7 @@ public class HealthBarHUD : MonoBehaviour
 
     public void UpdateHealthBar(int amount)
     {
-        Debug.Log("UPDATE MANA: " + amount);
+        //Debug.Log("UPDATE MANA: " + amount);
         ClearBar();
 
         for(int i =0; i < amount; i++)

@@ -11,25 +11,59 @@ public class GunCharger : MonoBehaviour
     ParticleSystemForceField forceField;
     ParticleSystem loadParticleSystem;
     [SerializeField] private Transform particlesStart;
-
+    AudioSource audioSource;
+    public PlayerStateManager player;
+    public float distance;
     private void Start()
     {
         forceField = GetComponent<ParticleSystemForceField>();
         loadParticleSystem = particlesStart.GetComponent<ParticleSystem>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0;
     }
+
+    private void Update()
+    {
+        if (player)
+        {
+            distance = Vector2.Distance(player.transform.position, transform.position);
+        }
+
+        if (distance > 3 && player || player == null)
+        {
+            if (loadParticleSystem.isPlaying)
+            {
+                if (audioSource.isPlaying)
+                {
+                    audioSource.volume = 0;
+                    audioSource.loop = false;
+                    audioSource.Stop();
+                }
+
+                loadParticleSystem.Stop();
+            }
+            return;
+        }
+    }
+
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {
 
-        if (!collision)
-            return;
-
-        PlayerStateManager player = collision.GetComponent<PlayerStateManager>();
-
-        if (!player)
+        player = collision.GetComponent<PlayerStateManager>();
+        Debug.Log(player);
+        if (distance > 3 && player || player == null)
         {
             if (loadParticleSystem.isPlaying)
             {
+                if (audioSource.isPlaying)
+                {
+                    audioSource.volume = 0;
+                    audioSource.loop = false;
+                    audioSource.Stop();
+                }
+
                 loadParticleSystem.Stop();
             }
             return;
@@ -38,9 +72,18 @@ public class GunCharger : MonoBehaviour
         if(player.gunLoad < player.maxGunLoad)
         {
 
-           
+            audioSource.volume += Time.deltaTime;
             if (!loadParticleSystem.isPlaying)
+            {
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.loop = true;
+                    audioSource.Play();
+
+                }
+
                 loadParticleSystem.Play();
+            }
 
             if (timer >=  chargeRatio)
             {
@@ -53,6 +96,12 @@ public class GunCharger : MonoBehaviour
         }
         else if (loadParticleSystem.isPlaying)
         {
+            if (audioSource.isPlaying)
+            {
+                audioSource.loop = false;
+                audioSource.volume = 0;
+                audioSource.Stop();
+            }
             loadParticleSystem.Stop();
         }
             

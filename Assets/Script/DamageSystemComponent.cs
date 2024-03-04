@@ -44,7 +44,7 @@ public class DamageSystemComponent : MonoBehaviour
 
         //StartCoroutine(Invincibility());
 
-        Debug.Log(health);
+        //Debug.Log(health);
 
         if (isDead)
         {

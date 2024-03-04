@@ -77,7 +77,9 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     [Header("Audio sources")]
     public AudioSource feetAudioSource;
     public AudioSource gunAudioSource;
+    public AudioSource gunAudioSource2;
     public AudioSource landingAudioSource;
+    public AudioSource damageAudioSource;
 
     [Header("Cameras")]
     public CinemachineVirtualCamera playerCamera;
@@ -332,6 +334,8 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
     {
         if (!shoot)
         {
+            gunAudioSource2.Stop();
+            gunAudioSource2.volume = 0;
             chargedShot = false;
             return true;
         }
@@ -339,6 +343,13 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
         {
             if (damageSystem.isDead)
                 return true;
+
+
+            gunAudioSource2.volume += Time.deltaTime * .5f;
+            if (!gunAudioSource2.isPlaying)
+            {
+                gunAudioSource2.Play();
+            }
 
             Vector2 spawnPoint = idleBulletSpawn.position;
             if (aiming)
@@ -460,18 +471,25 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     public void DoDamage(DamageSettings dmg)
     {
+        if (damageSystem.isInvincible || damageSystem.isDead)
+            return;
+
         damageSystem.DoDamage(dmg);
-        if(!damageSystem.isInvincible)
         StartCoroutine(damageSystem.Invincibility());
 
         StartCoroutine(SetDamageMaterial());
+
+        if(damageSystem.isDead)
+            AudioManager.instance.PlayerDeathDamage(feetAudioSource);
+        
+        AudioManager.instance.PlayerDamaged(damageAudioSource);
 
         GameManager.instance.damageReceived ++;
     }
 
     private IEnumerator SetDamageMaterial()
     {
-
+        Debug.Log("DAMAGE MATERIAL");
         SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer>();
         if (!damageSystem.isDead)
         {
@@ -482,9 +500,9 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
             }
         }
 
-        
         yield return new WaitForSeconds(.3f);
-        
+
+        Debug.Log("DEFAULT MATERIAL");
         foreach (SpriteRenderer sprite in sprites)
         {
             sprite.material = defaultMaterial;
@@ -494,7 +512,7 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
 
     public void Death()
     {
-        Debug.Log("GameOver");
+       // Debug.Log("GameOver");
         input.DisableGameInput();
         anim.Play("Death");
 

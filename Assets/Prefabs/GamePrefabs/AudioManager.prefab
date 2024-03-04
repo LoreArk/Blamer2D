@@ -82,13 +82,30 @@ MonoBehaviour:
       minVolume: 0.828
       maxVolume: 0.841
     chargedShot: []
-    damage: []
-    death:
-      audioClip: {fileID: 0}
+    damage:
+      audioClip: {fileID: 8300000, guid: 5d61c5efd3a809e4d9106d6aad1c4f5e, type: 3}
+      minPitch: 1
+      maxPitch: 0.8
+      minVolume: 1
+      maxVolume: 0.862
+    deathLanding:
+      audioClip: {fileID: 8300000, guid: 447e555c733fc9746bfc0aa26f2056ed, type: 3}
       minPitch: 1
       maxPitch: 1
       minVolume: 1
       maxVolume: 1
+    deathDamage:
+      audioClip: {fileID: 8300000, guid: 1a8edaf1b9aa21c409e6b41c929f0b7b, type: 3}
+      minPitch: 1
+      maxPitch: 0.7
+      minVolume: 1
+      maxVolume: 1
+    death:
+      audioClip: {fileID: 8300000, guid: 88208c5a934837148bac6d08e4ba0580, type: 3}
+      minPitch: 1
+      maxPitch: 1
+      minVolume: 0.725
+      maxVolume: 0.725
     meleeSlash:
       audioClip: {fileID: 8300000, guid: bc83a060fdc6ff14e9086be021247c12, type: 3}
       minPitch: 1
@@ -101,6 +118,12 @@ MonoBehaviour:
       maxPitch: 0
       minVolume: 0
       maxVolume: 0
+  deathSound:
+    audioClip: {fileID: 8300000, guid: b09f5fb2028c58646bfb93c9b641c4b8, type: 3}
+    minPitch: 1
+    maxPitch: 0.9
+    minVolume: 1
+    maxVolume: 0.55
   enemySounds:
     alarm:
       audioClip: {fileID: 8300000, guid: f964bca223e222643a599348b2c4e351, type: 3}

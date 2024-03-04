@@ -44,6 +44,12 @@ public class AnimatorHook : MonoBehaviour
         audioManager.PlayerLanded(PlayerStateManager.Instance.landingAudioSource);
     }
 
+    public void DeathLanding()
+    {
+        audioManager.PlayerDeathLand(PlayerStateManager.Instance.landingAudioSource);
+
+    }
+
     public void PlayerMeleeAttack()
     {
         audioManager.PlayerMeleeSlash(PlayerStateManager.Instance.gunAudioSource);

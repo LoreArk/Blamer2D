@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int enemiesKilled = 0;
     public float time = 0;
     public float usedEnergy = 0;
+    bool gameEnded;
 
     private void Awake()
     {
@@ -24,8 +25,13 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
+        if(!gameEnded)
         time += Time.deltaTime;
     }
 
+    public void EndGame()
+    {
+        gameEnded = true;
+    }
     
 }
