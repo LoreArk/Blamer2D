@@ -344,7 +344,6 @@ public class PlayerStateManager : MonoBehaviour, I_Shootable
             if (damageSystem.isDead)
                 return true;
 
-
             gunAudioSource2.volume += Time.deltaTime * .5f;
             if (!gunAudioSource2.isPlaying)
             {

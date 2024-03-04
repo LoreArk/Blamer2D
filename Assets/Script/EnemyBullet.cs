@@ -15,6 +15,7 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
     bool isFacingRight = true;
     bool isFacingDown = true;
     [SerializeField] private LayerMask damageLayer;
+    bool dead;
 
     private void Start()
     {
@@ -31,6 +32,7 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
         damageSettings.damage = 1;
 
         Physics2D.IgnoreCollision(player.bodyCollider, GetComponent<CircleCollider2D>());
+        
     }
 
 
@@ -74,6 +76,9 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
 
     void DamageTrigger()
     {
+        if (dead)
+            return;
+
         Collider2D[] overlapping = Physics2D.OverlapCircleAll(transform.position, 0.5f, damageLayer);
 
         foreach(Collider2D col in overlapping)
@@ -96,12 +101,14 @@ public class EnemyBullet : MonoBehaviour, I_Shootable
 
     public void DoDamage(DamageSettings dmg)
     {
+        dead = true;
         enemy.createdBullets--;
         Physics2D.IgnoreCollision(GetComponent<CircleCollider2D>(), player.bodyCollider);
         GameObject instance = Instantiate(bloodParticle, transform.position, Quaternion.Euler(0, 0, 0));
         instance.transform.localScale = new Vector3(.6f, .6f, .6f);
+        
 
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject, .1f);
     }
 
     void FollowPlayer()

@@ -169,7 +169,21 @@ public class UIManger : MonoBehaviour
         gameOver = true;
         GameManager manager = GameManager.instance;
         InputManager.instance.DisableGameInput();
-        time.text = manager.time.ToString();
+
+        float minutes = Mathf.Floor(manager.time / 60);
+        float seconds = Mathf.RoundToInt(manager.time % 60);
+        string m = minutes.ToString();
+        string s = seconds.ToString();
+        if (minutes < 10)
+        {
+            m = "0" + minutes.ToString();
+        }
+        if (seconds < 10)
+        {
+            s = "0" + Mathf.RoundToInt(seconds).ToString();
+        }
+
+        time.text = m + ":" + s;
         enemies.text = manager.enemiesKilled.ToString() + "/" + manager.totalEnemies.ToString();
         damageReceived.text = manager.damageReceived.ToString();
         energyConsumed.text = manager.usedEnergy.ToString();
